@@ -23,8 +23,8 @@ const SignUp = () => {
                 with us
               </Card.Title>
 
-              <Link to="/register">
-                <Button variant="primary">Sign-up</Button>
+              <Link to="/register" className="w-100 mt-3 ">
+                <Button variant="primary w-100">Sign-up</Button>
               </Link>
 
               <Card.Text className="mt-2 text-light">
