@@ -8,12 +8,14 @@ import { Link } from "react-router-dom";
 
 const MyNavBar = () => {
   return (
-    <Navbar expand="lg" className="bg-secondary">
+    <Navbar expand="lg" className="bg-secondary fixed-top ">
       <Container fluid className="d-flex align-items-center px-5 ">
-        <Navbar.Brand href="#" className="d-flex align-items-center">
-          <img src={LogoForma} width="35" height="35" alt="logo your home" />
-          Your Home
-        </Navbar.Brand>
+        <Link to="/" className="text-decoration-none">
+          <Navbar.Brand className="d-flex align-items-center">
+            <img src={LogoForma} width="35" height="35" alt="logo your home" />
+            Your Home
+          </Navbar.Brand>
+        </Link>
         <div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

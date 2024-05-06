@@ -1,4 +1,4 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
@@ -29,6 +29,15 @@ const SignUpForm = () => {
       alert("Registration successful!");
     }
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const isFormIncomplete = Object.values(formData).some(
+    (value) => value === ""
+  );
 
   return (
     <Container fluid className="signImgBg">
@@ -91,24 +100,40 @@ const SignUpForm = () => {
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="Password"
-                      placeholder="Password"
-                      className="w-100"
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  {formData.password && (
-                    <Form.Group className="mb-3" controlId="confirmPassword">
-                      <Form.Label>Confirm Password</Form.Label>
+                    <InputGroup>
                       <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
-                        className="w-100"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
                         onChange={handleChange}
                         required
                       />
+                      <InputGroup.Text onClick={togglePasswordVisibility}>
+                        <i
+                          className={`bi ${
+                            showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"
+                          }`}
+                        ></i>
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+                  {formData.password && (
+                    <Form.Group className="mb-3" controlId="confirmPassword">
+                      <Form.Label>Password</Form.Label>
+                      <InputGroup>
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          onChange={handleChange}
+                          required
+                        />
+                        <InputGroup.Text onClick={togglePasswordVisibility}>
+                          <i
+                            className={`bi ${
+                              showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"
+                            }`}
+                          ></i>
+                        </InputGroup.Text>
+                      </InputGroup>
                     </Form.Group>
                   )}
                   <Form.Group className="mb-3" controlId="birthdate">
@@ -127,6 +152,7 @@ const SignUpForm = () => {
                 variant="primary w-100"
                 type="submit"
                 onClick={handleSubmit}
+                disabled={isFormIncomplete}
               >
                 Sign-up
               </Button>
