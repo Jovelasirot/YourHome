@@ -8,7 +8,7 @@ export const registerUser = (payload) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });
     try {
-      dispatch({});
+      dispatch({ type: TURN_ON_SPINNER });
       const response = await fetch(baseEndPoint + "/auth/register", {
         method: "POST",
         headers: {

@@ -3,16 +3,32 @@ import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { registerUser } from "../../redux/actions/actions";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const [formBody, setFormBody] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
     username: "",
     password: "",
+    birthdate: "",
   });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+    } else {
+      dispatch(registerUser(formData));
+      alert("Registration successful!");
+    }
+  };
 
   return (
     <Container fluid className="signImgBg">
@@ -32,60 +48,88 @@ const SignUpForm = () => {
                 </span>
               </Card.Title>
               <Card.Text className="mt-2">
-                <Form>
-                  <Form.Group className="mb-3">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="name">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="First name"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
+                  <Form.Group className="mb-3" controlId="surname">
                     <Form.Label>Surname</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Surname"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
+                  <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Username"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
+                  <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Enter email"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
+                  <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      type="text"
+                      type="Password"
                       placeholder="Password"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Confirm password</Form.Label>
+                  {formData.password && (
+                    <Form.Group className="mb-3" controlId="confirmPassword">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="w-100"
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
+                  )}
+                  <Form.Group className="mb-3" controlId="birthdate">
+                    <Form.Label>Birthdate</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Confir password"
+                      type="date"
+                      placeholder="Birthdate"
                       className="w-100"
+                      onChange={handleChange}
+                      required
                     />
                   </Form.Group>
                 </Form>
               </Card.Text>
-              <Link to="/register" className="w-100 mt-3 ">
-                <Button variant="primary w-100">Sign-up</Button>
-              </Link>
+              <Button
+                variant="primary w-100"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Sign-up
+              </Button>
             </Card.Body>
           </Card>
         </Col>
