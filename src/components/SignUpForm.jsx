@@ -1,8 +1,19 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
+  const [formBody, setFormBody] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
   return (
     <Container fluid className="signImgBg">
       <Row className="align-itmes-center">
