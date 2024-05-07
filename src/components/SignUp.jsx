@@ -29,9 +29,11 @@ const SignUp = () => {
 
               <Card.Text className="mt-2 text-light">
                 Already have a register account, you can{" "}
-                <span className="text-decoration-underline text-primary ">
-                  Log-In
-                </span>
+                <Link to="/login">
+                  <span className="text-decoration-underline text-primary ">
+                    Log-In
+                  </span>
+                </Link>
               </Card.Text>
             </Card.Body>
           </Card>
