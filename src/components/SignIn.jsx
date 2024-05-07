@@ -4,12 +4,13 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { loginUser, registerUser } from "../../redux/actions/actions";
+import { loginUser } from "../../redux/actions/actions";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.login.content.token);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,7 +23,16 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData));
-    alert("Login successful!");
+    if (token) {
+      localStorage.setItem("token", token);
+      setFormData({
+        email: "",
+        password: "",
+      });
+      alert("Login successful!");
+    } else {
+      alert("Login failed. Please check your credentials.");
+    }
   };
 
   const [showPassword, setShowPassword] = useState(false);
