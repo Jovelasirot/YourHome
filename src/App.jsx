@@ -4,6 +4,7 @@ import MyNabBar from "./components/MyNabBar";
 import SignUp from "./components/SignUp";
 import SignUpForm from "./components/SignUpForm";
 import SignIn from "./components/SignIn";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<SignUp />} />
           <Route path="/register" element={<SignUpForm />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/homepage" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </>

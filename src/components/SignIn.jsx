@@ -1,4 +1,4 @@
-import { Col, Container, InputGroup, Row } from "react-bootstrap";
+import { Col, Container, InputGroup, Row, Spinner } from "react-bootstrap";
 import LogoForma from "../assets/Img/LogoForma.svg";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -12,6 +12,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.login.content.token);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,18 +24,19 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     dispatch(loginUser(formData));
-    if (token) {
-      localStorage.setItem("token", token);
-      setFormData({
-        email: "",
-        password: "",
-      });
-      alert("Login successful!");
-      navigate("/");
-    } else {
-      alert("Login failed. Please check your credentials.");
-    }
+    setTimeout(() => {
+      setIsLoading(false);
+      if (token) {
+        localStorage.setItem("token", token);
+        setFormData({
+          email: "",
+          password: "",
+        });
+        navigate("/homepage");
+      }
+    }, 1500);
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -111,9 +113,15 @@ const SignIn = () => {
                 variant="primary w-100"
                 type="submit"
                 onClick={handleSubmit}
-                disabled={isFormIncomplete}
+                disabled={isFormIncomplete || isLoading}
               >
-                Log in
+                {isLoading ? (
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                ) : (
+                  "Log in"
+                )}
               </Button>
             </Card.Body>
           </Card>

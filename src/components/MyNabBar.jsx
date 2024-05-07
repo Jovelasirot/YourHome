@@ -10,7 +10,10 @@ const MyNavBar = () => {
   return (
     <Navbar expand="lg" className="bg-secondary fixed-top ">
       <Container fluid className="d-flex align-items-center px-5 ">
-        <Link to="/" className="text-decoration-none">
+        <Link
+          to={localStorage.getItem("token") ? "/homepage" : "/"}
+          className="text-decoration-none"
+        >
           <Navbar.Brand className="d-flex align-items-center">
             <img src={LogoForma} width="35" height="35" alt="logo your home" />
             Your Home
