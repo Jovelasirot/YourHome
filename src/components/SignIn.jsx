@@ -2,7 +2,7 @@ import { Col, Container, InputGroup, Row } from "react-bootstrap";
 import LogoForma from "../assets/Img/LogoForma.svg";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { loginUser } from "../../redux/actions/actions";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.login.content.token);
   const [formData, setFormData] = useState({
     email: "",
@@ -30,6 +31,7 @@ const SignIn = () => {
         password: "",
       });
       alert("Login successful!");
+      navigate("/");
     } else {
       alert("Login failed. Please check your credentials.");
     }
