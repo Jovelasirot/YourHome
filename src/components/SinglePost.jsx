@@ -29,7 +29,7 @@ const SinglePost = () => {
   }
 
   return (
-    <Card id="signUpRectangle">
+    <>
       {loading ? (
         <>
           {[...Array(3)].map((_, index) => (
@@ -42,18 +42,41 @@ const SinglePost = () => {
         </>
       ) : (
         properties.map((property) => (
-          <Card key={property.id}>
-            <Card.Body>
-              <Card.Title>{property.address}</Card.Title>
-              <Card.Text>
-                Price: {property.price}, Area: {property.area} sqft
-              </Card.Text>
-              <Button variant="primary">Details</Button>
-            </Card.Body>
-          </Card>
+          <Col key={property.id}>
+            <Card className="shadow">
+              <div className="image-container">
+                <img
+                  src={property.images[0]}
+                  alt="property picture"
+                  className="card-thumbnail"
+                />
+              </div>
+              <Card.Body className="mt-3">
+                <div className="d-flex justify-content-between">
+                  <Card.Title>{property.address}</Card.Title>
+                  <Card.Title>
+                    $ {Math.floor(parseInt(property.price) / 1000)} k
+                  </Card.Title>
+                </div>
+                <Card.Text className="mt-3">{property.description}</Card.Text>
+                <Row className="justify-content-between mt-5">
+                  <Col>
+                    <Button variant="primary" className="w-100">
+                      View more
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button variant="success" className="w-100">
+                      Contant the seller
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
         ))
       )}
-    </Card>
+    </>
   );
 };
 

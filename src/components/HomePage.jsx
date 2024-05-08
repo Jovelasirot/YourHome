@@ -3,7 +3,7 @@ import SinglePost from "./SinglePost";
 
 const HomePage = () => {
   return (
-    <Container fluid className="vh-100">
+    <Container fluid>
       <Row className="px-5 py-5 mb-5 border-bottom">
         <h1>Filter:</h1>
         <Col>
@@ -32,10 +32,8 @@ const HomePage = () => {
         </Col>
       </Row>
       <Container>
-        <Row xs={1} md={2} className="justify-content-center">
-          <Col>
-            <SinglePost />
-          </Col>
+        <Row xs={1} md={2} className="justify-content-center g-5">
+          <SinglePost />
         </Row>
       </Container>
     </Container>
