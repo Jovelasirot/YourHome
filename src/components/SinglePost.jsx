@@ -12,15 +12,6 @@ import { getProperties } from "../../redux/actions/actions";
 import { useEffect } from "react";
 
 const SinglePost = () => {
-  const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    if (token) {
-      dispatch(getProperties(token));
-    }
-  }, [dispatch, token]);
-
   const loading = useSelector((state) => state.properties.loading);
   const properties = useSelector((state) => state.properties.content.content);
 

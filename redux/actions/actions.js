@@ -58,18 +58,21 @@ export const loginUser = (payload) => {
   };
 };
 
-export const getProperties = (token) => {
+export const getProperties = (token, filters) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });
-
     try {
-      const response = await fetch(baseEndPoint + "/properties", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const queryParams = new URLSearchParams(filters).toString();
+      const response = await fetch(
+        baseEndPoint + "/properties" + "/search" + "?" + queryParams,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
