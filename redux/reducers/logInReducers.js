@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
 };
 
-const loginUser = (state = initialState, action) => {
+const logInReducers = (state = initialState, action) => {
   switch (action.type) {
     case TURN_ON_SPINNER:
       return {
@@ -32,4 +32,4 @@ const loginUser = (state = initialState, action) => {
   }
 };
 
-export default loginUser;
+export default logInReducers;

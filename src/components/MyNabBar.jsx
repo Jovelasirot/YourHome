@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const MyNavBar = () => {
   return (
-    <Navbar expand="lg" className="bg-secondary fixed-top ">
+    <Navbar expand="lg" className="bg-secondary border-bottom">
       <Container fluid className="d-flex align-items-center px-5 ">
         <Link
           to={localStorage.getItem("token") ? "/homepage" : "/"}
