@@ -1,15 +1,7 @@
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Placeholder,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProperties } from "../../redux/actions/actions";
-import { useEffect } from "react";
 
 const SinglePost = () => {
   const loading = useSelector((state) => state.properties.loading);
@@ -22,15 +14,9 @@ const SinglePost = () => {
   return (
     <>
       {loading ? (
-        <>
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="mb-3">
-              <Placeholder xs={12} />
-              <Placeholder xs={12} />
-              <Placeholder xs={12} />
-            </div>
-          ))}
-        </>
+        <Col className="text-center">
+          <Spinner animation="grow" variant="primary" />
+        </Col>
       ) : (
         properties.map((property) => (
           <Col key={property.id}>
@@ -46,7 +32,7 @@ const SinglePost = () => {
                 <div className="d-flex justify-content-between">
                   <Card.Title>{property.address}</Card.Title>
                   <Card.Title>
-                    $ {Math.floor(parseInt(property.price) / 1000)} k
+                    € {Math.floor(parseInt(property.price) / 1000)} k
                   </Card.Title>
                 </div>
                 <Card.Text className="mt-3">{property.description}</Card.Text>

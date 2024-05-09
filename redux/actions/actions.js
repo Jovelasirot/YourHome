@@ -62,7 +62,21 @@ export const getProperties = (token, filters) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });
     try {
-      const queryParams = new URLSearchParams(filters).toString();
+      const safeFilters = { ...filters };
+      if (
+        safeFilters.propertyStatus === "ALL" ||
+        safeFilters.propertyStatus === null
+      ) {
+        console.log(safeFilters.propertyStatus);
+        delete safeFilters.propertyStatus;
+      }
+      if (
+        safeFilters.propertyType === "ALL" ||
+        safeFilters.propertyType === null
+      ) {
+        delete safeFilters.propertyType;
+      }
+      const queryParams = new URLSearchParams(safeFilters).toString();
       const response = await fetch(
         baseEndPoint + "/properties" + "/search" + "?" + queryParams,
         {
@@ -78,7 +92,9 @@ export const getProperties = (token, filters) => {
         const data = await response.json();
         dispatch({ type: GET_PROPERTIES, payload: data });
       } else {
-        alert("Error while fetching the properties");
+        alert(
+          "Error while fetching the properties, select all the input for the filters."
+        );
       }
     } catch (error) {
       console.log(error);
