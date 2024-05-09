@@ -11,7 +11,6 @@ import { loginUser } from "../../redux/actions/actions";
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.login.content.token);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -27,9 +26,9 @@ const SignIn = () => {
     setIsLoading(true);
     dispatch(loginUser(formData));
     setTimeout(() => {
+      const token = localStorage.getItem("token");
       setIsLoading(false);
       if (token) {
-        localStorage.setItem("token", token);
         setFormData({
           email: "",
           password: "",

@@ -3,6 +3,7 @@ export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const REGISTER_USER = "REGISTER_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const GET_PROPERTIES = "GET_PROPERTIES";
+export const GET_PROFILE = "GET_PROFILE";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -46,6 +47,7 @@ export const loginUser = (payload) => {
       });
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("token", data.token);
         dispatch({ type: LOGIN_USER, payload: data });
       } else {
         alert("Error while login");
@@ -67,7 +69,6 @@ export const getProperties = (token, filters) => {
         safeFilters.propertyStatus === "ALL" ||
         safeFilters.propertyStatus === null
       ) {
-        console.log(safeFilters.propertyStatus);
         delete safeFilters.propertyStatus;
       }
       if (
@@ -95,6 +96,32 @@ export const getProperties = (token, filters) => {
         alert(
           "Error while fetching the properties, select all the input for the filters."
         );
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getProfile = (token) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(baseEndPoint + "/users/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: GET_PROFILE, payload: data });
+      } else {
+        alert("Error while fetching profile");
       }
     } catch (error) {
       console.log(error);
