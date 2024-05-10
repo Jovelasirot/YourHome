@@ -4,16 +4,17 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import LogoForma from "../assets/Img/LogoForma.svg";
 import Button from "react-bootstrap/Button";
-import { Link, useLocation } from "react-router-dom";
-import { Col, Form } from "react-bootstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Col, Dropdown, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/actions/actions";
 
 const MyNavBar = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (token) {
@@ -21,8 +22,12 @@ const MyNavBar = () => {
     }
   }, [dispatch, token]);
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
-    <Navbar expand="lg" className="bg-secondary border-bottom">
+    <Navbar expand="lg" className="bg-secondary border-bottom py-0 ">
       <Container fluid className="d-flex align-items-center px-5 ">
         <Link
           to={localStorage.getItem("token") ? "/homepage" : "/"}
@@ -37,14 +42,81 @@ const MyNavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <div className="ms-auto">
-            <Nav className="d-flex align-items-center ">
-              <Nav.Link href="#">About us</Nav.Link>
-              <Nav.Link href="#">Latest</Nav.Link>
+            <Nav className="d-flex align-items-center h-100">
+              <Link
+                to={localStorage.getItem("token") ? "/homepage" : "/"}
+                className="text-decoration-none"
+              >
+                <span
+                  className={`text-decoration-none me-lg-4 ${
+                    location.pathname === "/homepage"
+                      ? "text-dark"
+                      : "text-muted"
+                  }`}
+                >
+                  Home
+                </span>
+              </Link>
+              <Link to="/notfound" className="text-decoration-none">
+                <span
+                  className={`text-decoration-none me-lg-4 ${
+                    location.pathname === "/notfound"
+                      ? "text-dark"
+                      : "text-muted"
+                  }`}
+                >
+                  About us
+                </span>
+              </Link>
+              <Link to="/sell" className="text-decoration-none">
+                <span
+                  className={`text-decoration-none me-lg-4 ${
+                    location.pathname === "/sell" ? "text-dark" : "text-muted"
+                  }`}
+                >
+                  Sell
+                </span>
+              </Link>
               <Nav.Link>
                 {localStorage.getItem("token") ? (
                   <>
-                    <img src={profile.avatar} alt="test" />
-                    <p>{profile.name}</p>
+                    <img
+                      src={profile.avatar}
+                      alt="test"
+                      width="35"
+                      height="35"
+                      className="rounded-circle border border-primary"
+                      onClick={toggleDropdown}
+                    />
+                    {showDropdown && (
+                      <Dropdown show={showDropdown}>
+                        <Dropdown.Menu
+                          align="end"
+                          className="bg-secondary p-0 "
+                        >
+                          <Dropdown.Item>
+                            <Link
+                              to="/profile"
+                              className={`text-decoration-none me-lg-4 ${
+                                location.pathname === "/profile"
+                                  ? "text-dark"
+                                  : "text-muted"
+                              }`}
+                            >
+                              Your profile{" "}
+                            </Link>
+                          </Dropdown.Item>
+
+                          <Dropdown.Item href="#/action-2">Saved</Dropdown.Item>
+                          <Dropdown.Item
+                            href="#/action-3"
+                            className="text-danger border-top"
+                          >
+                            Log out
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
                   </>
                 ) : (
                   <Link to="/">

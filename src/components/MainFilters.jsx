@@ -148,15 +148,15 @@ const MainFilers = () => {
         </Col>
 
         <Modal show={showModal} onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton className="bg-secondary ">
             <Modal.Title>Price range</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="bg-secondary rounded-bottom-5">
             <Row className="flex-column">
               <Col>
                 Minimum price:
                 <input
-                  className="form-control"
+                  className="form-control bg-secondary "
                   value={filters.minPrice}
                   onChange={(e) => handleInputChange(e, "minPrice")}
                 />
@@ -164,7 +164,7 @@ const MainFilers = () => {
               <Col className="my-3">
                 Maximum price:
                 <input
-                  className="form-control"
+                  className="form-control bg-secondary "
                   value={filters.maxPrice}
                   onChange={(e) => handleInputChange(e, "maxPrice")}
                 />

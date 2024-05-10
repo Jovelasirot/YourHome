@@ -49,6 +49,7 @@ export const loginUser = (payload) => {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         dispatch({ type: LOGIN_USER, payload: data });
+        dispatch(getProfile(data.token));
       } else {
         alert("Error while login");
       }
