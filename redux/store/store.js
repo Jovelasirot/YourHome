@@ -4,6 +4,7 @@ import logInReducers from "../reducers/logInReducers";
 import getPropertiesReducers from "../reducers/getPropertiesReducers";
 import getProfileReducers from "../reducers/getProfileReducers";
 import favoritePropertyReducers from "../reducers/favoritePropertyReducers";
+import getAllProperties from "../reducers/allPropertyReducers";
 
 const globalReducer = combineReducers({
   register: signUpReducers,
@@ -11,6 +12,7 @@ const globalReducer = combineReducers({
   properties: getPropertiesReducers,
   profile: getProfileReducers,
   favoriteList: favoritePropertyReducers,
+  allProperties: getAllProperties,
 });
 
 const store = configureStore({

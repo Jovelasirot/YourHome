@@ -5,6 +5,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const GET_PROPERTIES = "GET_PROPERTIES";
 export const GET_PROFILE = "GET_PROFILE";
 export const FAVORITES_LIST = "ADD_TO_FAVORITE";
+export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -98,6 +99,32 @@ export const getProperties = (token, filters) => {
         alert(
           "Error while fetching the properties, select all the input for the filters."
         );
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getAllProperties = (token) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(baseEndPoint + "/properties", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: GET_ALL_PROPERTIES, payload: data });
+      } else {
+        alert("Error while fetching the properties");
       }
     } catch (error) {
       console.log(error);

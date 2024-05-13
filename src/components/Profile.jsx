@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { getProfile } from "../../redux/actions/actions";
+import ProfileDxSection from "./ProfileDxSection";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Profile = () => {
 
   return (
     <Container fluid className="vh-100">
-      <Row className="flex-column g-5 p-5">
+      <Row className="g-5 p-5">
         <Col lg={2}>
           <Card id="profileRetangle" className="py-5 px-5">
             <Card.Img
@@ -55,6 +56,9 @@ const Profile = () => {
               </Card.Text>
             </Card.Body>
           </Card>
+        </Col>
+        <Col lg={10}>
+          <ProfileDxSection />
         </Col>
       </Row>
     </Container>
