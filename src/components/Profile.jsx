@@ -26,12 +26,14 @@ const Profile = () => {
               src={profile.avatar}
               style={{ width: "200px", height: "200px", margin: "auto" }}
               className="mt-5 rounded-circle"
+              alt="profile picture"
             />
             <Card.Body className="d-flex flex-column align-items-center justify-content-center">
               <Card.Title className="fs-3 text-center">
                 {profile.name} {profile.surname}
                 <p className="fs-6 fw-light mt-4">
-                  <i className="bi bi-geo-alt me-2"></i>Italy
+                  <i className="bi bi-geo-alt me-2"></i>
+                  {profile.country}
                 </p>
               </Card.Title>
               <Link to="/register" className="w-100 mt-3 ">

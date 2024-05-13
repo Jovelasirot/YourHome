@@ -4,6 +4,7 @@ export const REGISTER_USER = "REGISTER_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const GET_PROPERTIES = "GET_PROPERTIES";
 export const GET_PROFILE = "GET_PROFILE";
+export const FAVORITES_LIST = "ADD_TO_FAVORITE";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -123,6 +124,60 @@ export const getProfile = (token) => {
         dispatch({ type: GET_PROFILE, payload: data });
       } else {
         alert("Error while fetching profile");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getFavoriteList = (token) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(baseEndPoint + "/users/me/favorites", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: FAVORITES_LIST, payload: data });
+      } else {
+        alert("Error while fetching profile");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const updateFavoritesList = (token, propertyId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(
+        baseEndPoint + "/users/me/favorites/properties/" + propertyId,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("Property favorite list updated");
+        dispatch(getFavoriteList(token));
+      } else {
+        alert("Error while updating favorites");
       }
     } catch (error) {
       console.log(error);

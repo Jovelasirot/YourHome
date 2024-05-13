@@ -1,11 +1,32 @@
 import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProperties } from "../../redux/actions/actions";
+import {
+  getFavoriteList,
+  getProperties,
+  updateFavoritesList,
+} from "../../redux/actions/actions";
+import { useEffect } from "react";
 
 const SinglePost = () => {
   const loading = useSelector((state) => state.properties.loading);
   const properties = useSelector((state) => state.properties.content.content);
+  const favoriteList = useSelector(
+    (state) => state.favoriteList.content.favoritePropertyIds
+  );
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getFavoriteList(token));
+    }
+  }, [dispatch, token]);
+
+  const handleAddToFavorites = (token, propertyId) => {
+    dispatch(updateFavoritesList(token, propertyId));
+    dispatch(getFavoriteList(token));
+  };
 
   if (!Array.isArray(properties) || properties.length === 0) {
     return <div>No properties to display.</div>;
@@ -20,7 +41,7 @@ const SinglePost = () => {
       ) : (
         properties.map((property) => (
           <Col key={property.id}>
-            <Card className="shadow">
+            <Card className="shadow" id="singlePostRectangle">
               <div className="image-container">
                 <img
                   src={property.images[0]}
@@ -29,13 +50,36 @@ const SinglePost = () => {
                 />
               </div>
               <Card.Body className="mt-3">
-                <div className="d-flex justify-content-between">
-                  <Card.Title>{property.address}</Card.Title>
-                  <Card.Title>
-                    € {Math.floor(parseInt(property.price) / 1000)} k
-                  </Card.Title>
+                <Row className="justify-content-between">
+                  <Col className="d-flex ">
+                    <Card.Title>
+                      {property.address}
+                      <p className="fw-light fs-6">{property.country}</p>
+                    </Card.Title>
+                  </Col>
+                  <Col>
+                    <Card.Title className="text-end">
+                      € {Math.floor(parseInt(property.price) / 1000)} k
+                      <p className="fw-light fs-6">Area: {property.area} m²</p>
+                    </Card.Title>
+                  </Col>
+                </Row>
+                <div className="d-flex justify-content-end  ">
+                  {favoriteList && favoriteList.includes(property.id) ? (
+                    <i
+                      className="bi bi-heart-fill fs-4 heartIcon text-danger"
+                      onClick={() => handleAddToFavorites(token, property.id)}
+                    />
+                  ) : (
+                    <i
+                      className="bi bi-heart fs-4 heartIcon"
+                      onClick={() => handleAddToFavorites(token, property.id)}
+                    />
+                  )}
                 </div>
-                <Card.Text className="mt-3">{property.description}</Card.Text>
+                <Card.Text className="mt-2 px-2 ">
+                  {property.description}
+                </Card.Text>
                 <Row className="justify-content-between mt-5">
                   <Col>
                     <Button variant="primary" className="w-100">

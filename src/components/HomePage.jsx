@@ -4,7 +4,7 @@ import MainFilers from "./MainFilters";
 
 const HomePage = () => {
   return (
-    <Container fluid className="vh-100">
+    <Container fluid>
       <Row className="px-5 py-5 mb-5 border-bottom ">
         <MainFilers />
       </Row>
