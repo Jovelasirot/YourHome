@@ -53,6 +53,7 @@ const MyNavBar = () => {
               <Link
                 to={localStorage.getItem("token") ? "/homepage" : "/"}
                 className="text-decoration-none"
+                onClick={() => setShowDropdown(false)}
               >
                 <span
                   className={`text-decoration-none me-lg-4 ${
@@ -64,7 +65,11 @@ const MyNavBar = () => {
                   Home
                 </span>
               </Link>
-              <Link to="/notfound" className="text-decoration-none">
+              <Link
+                to="/notfound"
+                className="text-decoration-none"
+                onClick={() => setShowDropdown(false)}
+              >
                 <span
                   className={`text-decoration-none me-lg-4 ${
                     location.pathname === "/notfound"
@@ -75,7 +80,11 @@ const MyNavBar = () => {
                   About us
                 </span>
               </Link>
-              <Link to="/sell" className="text-decoration-none">
+              <Link
+                to="/sell"
+                className="text-decoration-none"
+                onClick={() => setShowDropdown(false)}
+              >
                 <span
                   className={`text-decoration-none me-lg-4 ${
                     location.pathname === "/sell" ? "text-dark" : "text-muted"
@@ -117,11 +126,7 @@ const MyNavBar = () => {
 
                           <Dropdown.Item href="#/action-2">Saved</Dropdown.Item>
                           <Dropdown.Item
-                            className={`text-decoration-none border-top me-lg-4 ${
-                              location.pathname === "/profile"
-                                ? "text-dark"
-                                : "text-danger"
-                            }`}
+                            className="text-decoration-none border-top me-lg-4 text-danger"
                             onClick={handleLogOut}
                           >
                             Log out
