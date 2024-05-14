@@ -4,16 +4,18 @@ import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { registerUser } from "../../redux/actions/actions";
+import Select from "react-select";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
+    birthdate: "",
+    country: "",
     email: "",
     username: "",
     password: "",
-    birthdate: "",
   });
 
   const handleChange = (e) => {
@@ -38,6 +40,33 @@ const SignUpForm = () => {
   const isFormIncomplete = Object.values(formData).some(
     (value) => value === ""
   );
+
+  const countryOptions = [
+    { value: "Austria", label: "Austria" },
+    { value: "Belgium", label: "Belgium" },
+    { value: "Canada", label: "Canada" },
+    { value: "Denmark", label: "Denmark" },
+    { value: "Finland", label: "Finland" },
+    { value: "France", label: "France" },
+    { value: "Germany", label: "Germany" },
+    { value: "Greece", label: "Greece" },
+    { value: "Italy", label: "Italy" },
+    { value: "Monaco", label: "Monaco" },
+    { value: "Netherlands", label: "Netherlands" },
+    { value: "Norway", label: "Norway" },
+    { value: "Poland", label: "Poland" },
+    { value: "Portugal", label: "Portugal" },
+    { value: "San Marino", label: "San Marino" },
+    { value: "Spain", label: "Spain" },
+    { value: "Sweden", label: "Sweden" },
+    { value: "Switzerland", label: "Switzerland" },
+    { value: "United Kingdom", label: "United Kingdom" },
+    { value: "United States", label: "United States" },
+  ];
+
+  const handleCountryChange = (selectedOption) => {
+    setFormData({ ...formData, country: selectedOption.value });
+  };
 
   return (
     <Container fluid className="signImgBg">
@@ -79,6 +108,25 @@ const SignUpForm = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="username">
+                    <Form.Group className="mb-3" controlId="birthdate">
+                      <Form.Label>Birthdate</Form.Label>
+                      <Form.Control
+                        type="date"
+                        placeholder="Birthdate"
+                        className="w-100"
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="country">
+                      <Form.Label>Country</Form.Label>
+                      <Select
+                        options={countryOptions}
+                        onChange={handleCountryChange}
+                        className="w-100"
+                        required
+                      />
+                    </Form.Group>
                     <Form.Label>Username</Form.Label>
                     <Form.Control
                       type="text"
@@ -136,16 +184,6 @@ const SignUpForm = () => {
                       </InputGroup>
                     </Form.Group>
                   )}
-                  <Form.Group className="mb-3" controlId="birthdate">
-                    <Form.Label>Birthdate</Form.Label>
-                    <Form.Control
-                      type="date"
-                      placeholder="Birthdate"
-                      className="w-100"
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
                 </Form>
               </Card.Text>
               <Button
