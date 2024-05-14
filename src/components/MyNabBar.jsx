@@ -109,8 +109,8 @@ const MyNavBar = () => {
 
                           <Dropdown.Item href="#/action-2">Saved</Dropdown.Item>
                           <Dropdown.Item
-                            href="#/action-3"
-                            className="text-danger border-top"
+                            className="text-decoration-none border-top me-lg-4 text-danger"
+                            onClick={handleLogOut}
                           >
                             Log out
                           </Dropdown.Item>
