@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const REGISTER_USER = "REGISTER_USER";
@@ -9,7 +11,7 @@ export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
 
 const baseEndPoint = "http://localhost:3001";
 
-export const registerUser = (payload) => {
+export const registerUser = (payload, navigate) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });
     try {
@@ -24,8 +26,10 @@ export const registerUser = (payload) => {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: REGISTER_USER, payload: data });
+        navigate("/login");
       } else {
-        alert("Error while registering");
+        alert("Error while registering, try another email.");
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

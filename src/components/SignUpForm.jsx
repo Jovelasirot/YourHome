@@ -1,19 +1,22 @@
 import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { registerUser } from "../../redux/actions/actions";
+import Select from "react-select";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
+    birthdate: "",
+    country: "",
     email: "",
     username: "",
     password: "",
-    birthdate: "",
   });
 
   const handleChange = (e) => {
@@ -24,9 +27,12 @@ const SignUpForm = () => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
+    } else if (!validateEmail(formData.email)) {
+      alert("Please enter a valid email address");
     } else {
-      dispatch(registerUser(formData));
-      alert("Registration successful!");
+      localStorage.setItem("email", formData.email);
+      localStorage.setItem("password", formData.password);
+      dispatch(registerUser(formData, navigate));
     }
   };
 
@@ -38,6 +44,38 @@ const SignUpForm = () => {
   const isFormIncomplete = Object.values(formData).some(
     (value) => value === ""
   );
+
+  const countryOptions = [
+    { value: "Austria", label: "Austria" },
+    { value: "Belgium", label: "Belgium" },
+    { value: "Canada", label: "Canada" },
+    { value: "Denmark", label: "Denmark" },
+    { value: "Finland", label: "Finland" },
+    { value: "France", label: "France" },
+    { value: "Germany", label: "Germany" },
+    { value: "Greece", label: "Greece" },
+    { value: "Italy", label: "Italy" },
+    { value: "Monaco", label: "Monaco" },
+    { value: "Netherlands", label: "Netherlands" },
+    { value: "Norway", label: "Norway" },
+    { value: "Poland", label: "Poland" },
+    { value: "Portugal", label: "Portugal" },
+    { value: "San Marino", label: "San Marino" },
+    { value: "Spain", label: "Spain" },
+    { value: "Sweden", label: "Sweden" },
+    { value: "Switzerland", label: "Switzerland" },
+    { value: "United Kingdom", label: "United Kingdom" },
+    { value: "United States", label: "United States" },
+  ];
+
+  const handleCountryChange = (selectedOption) => {
+    setFormData({ ...formData, country: selectedOption.value });
+  };
+
+  const validateEmail = (email) => {
+    const regxEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regxEmail.test(String(email).toLowerCase());
+  };
 
   return (
     <Container fluid className="signImgBg">
@@ -79,6 +117,25 @@ const SignUpForm = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="username">
+                    <Form.Group className="mb-3" controlId="birthdate">
+                      <Form.Label>Birthdate</Form.Label>
+                      <Form.Control
+                        type="date"
+                        placeholder="Birthdate"
+                        className="w-100"
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="country">
+                      <Form.Label>Country</Form.Label>
+                      <Select
+                        options={countryOptions}
+                        onChange={handleCountryChange}
+                        className="w-100"
+                        required
+                      />
+                    </Form.Group>
                     <Form.Label>Username</Form.Label>
                     <Form.Control
                       type="text"
@@ -118,7 +175,7 @@ const SignUpForm = () => {
                   </Form.Group>
                   {formData.password && (
                     <Form.Group className="mb-3" controlId="confirmPassword">
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label>Confirm password</Form.Label>
                       <InputGroup>
                         <Form.Control
                           type={showPassword ? "text" : "password"}
@@ -136,16 +193,6 @@ const SignUpForm = () => {
                       </InputGroup>
                     </Form.Group>
                   )}
-                  <Form.Group className="mb-3" controlId="birthdate">
-                    <Form.Label>Birthdate</Form.Label>
-                    <Form.Control
-                      type="date"
-                      placeholder="Birthdate"
-                      className="w-100"
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
                 </Form>
               </Card.Text>
               <Button

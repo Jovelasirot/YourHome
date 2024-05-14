@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import LogoForma from "../assets/Img/LogoForma.svg";
 import Button from "react-bootstrap/Button";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Col, Dropdown, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/actions/actions";
@@ -15,6 +15,7 @@ const MyNavBar = () => {
   const token = localStorage.getItem("token");
   const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -24,6 +25,12 @@ const MyNavBar = () => {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    setShowDropdown(!showDropdown);
+    navigate("/");
   };
 
   return (
@@ -102,6 +109,7 @@ const MyNavBar = () => {
                                   ? "text-dark"
                                   : "text-muted"
                               }`}
+                              onClick={toggleDropdown}
                             >
                               Your profile{" "}
                             </Link>
@@ -109,7 +117,11 @@ const MyNavBar = () => {
 
                           <Dropdown.Item href="#/action-2">Saved</Dropdown.Item>
                           <Dropdown.Item
-                            className="text-decoration-none border-top me-lg-4 text-danger"
+                            className={`text-decoration-none border-top me-lg-4 ${
+                              location.pathname === "/profile"
+                                ? "text-dark"
+                                : "text-danger"
+                            }`}
                             onClick={handleLogOut}
                           >
                             Log out
