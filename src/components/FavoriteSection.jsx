@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllProperties, getFavoriteList } from "../../redux/actions/actions";
 
-const ProfileDxSection = () => {
+const FavoriteSection = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const favoriteList = useSelector(
@@ -52,4 +52,4 @@ const ProfileDxSection = () => {
   );
 };
 
-export default ProfileDxSection;
+export default FavoriteSection;
