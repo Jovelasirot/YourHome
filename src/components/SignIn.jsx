@@ -12,9 +12,11 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const emailStored = localStorage.getItem("email");
+  const passwordStored = localStorage.getItem("password");
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "" || emailStored,
+    password: "" || passwordStored,
   });
 
   const handleChange = (e) => {
@@ -43,9 +45,19 @@ const SignIn = () => {
     setShowPassword(!showPassword);
   };
 
-  const isFormIncomplete = Object.values(formData).some(
-    (value) => value === ""
-  );
+  const isFormIncomplete =
+    Object.entries(formData).some(([key, value]) => {
+      if (value === "") {
+        return true;
+      }
+      if (
+        (key === "email" && emailStored) ||
+        (key === "password" && passwordStored)
+      ) {
+        return false;
+      }
+      return false;
+    }) && !(emailStored && passwordStored);
 
   return (
     <Container fluid className="signImgBg">
@@ -84,6 +96,7 @@ const SignIn = () => {
                       placeholder="email"
                       className="w-100"
                       onChange={handleChange}
+                      defaultValue={emailStored ? emailStored : ""}
                       required
                     />
                   </Form.Group>
@@ -95,6 +108,7 @@ const SignIn = () => {
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
                         onChange={handleChange}
+                        defaultValue={passwordStored ? passwordStored : ""}
                         required
                       />
                       <InputGroup.Text onClick={togglePasswordVisibility}>
