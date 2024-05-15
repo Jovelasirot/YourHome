@@ -1,9 +1,10 @@
 import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getFavoriteList,
   getProperties,
+  getSingleProperty,
   updateFavoritesList,
 } from "../../redux/actions/actions";
 import { useEffect } from "react";
@@ -41,7 +42,7 @@ const SinglePost = () => {
       ) : (
         properties.map((property) => (
           <Col key={property.id}>
-            <Card className="shadow" id="singlePostRectangle">
+            <Card className="shadow bg-secondary">
               <div className="image-container">
                 <img
                   src={property.images[0]}
@@ -82,9 +83,11 @@ const SinglePost = () => {
                 </Card.Text>
                 <Row className="justify-content-between mt-5">
                   <Col>
-                    <Button variant="primary" className="w-100">
-                      View more
-                    </Button>
+                    <Link to={`/homepage/details/${property.id}`}>
+                      <Button variant="primary" className="w-100">
+                        View more
+                      </Button>
+                    </Link>
                   </Col>
                   <Col>
                     <Button variant="success" className="w-100">

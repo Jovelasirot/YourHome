@@ -7,6 +7,8 @@ import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 import MyNavBar from "./components/MyNavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import FavoriteSection from "./components/FavoriteSection";
+import ViewMoreSection from "./components/ViewMoreSection";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -26,6 +28,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/homepage/details/:propertyId"
+            element={
+              <ProtectedRoute>
+                <ViewMoreSection />
               </ProtectedRoute>
             }
           />

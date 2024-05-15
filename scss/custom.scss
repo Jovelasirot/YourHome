@@ -91,15 +91,6 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMA
     box-shadow: 1px 8px 15px -4px #b3b1b1;; }
 }
 
-#singlePostRectangle{
-  background: #ECECEC;
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: $primary solid 1px;
-}
-
 .btnProfile {
   border: none; 
   border-radius: 25px; 

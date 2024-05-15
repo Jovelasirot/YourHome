@@ -30,6 +30,10 @@ const FavoriteSection = () => {
     dispatch(getFavoriteList(token));
   };
 
+  if (!favoriteList || favoriteList.length === 0) {
+    return <div>Your favorite properties will be shown here.</div>;
+  }
+
   return (
     <Row>
       {favoriteList &&

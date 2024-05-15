@@ -8,6 +8,7 @@ export const GET_PROPERTIES = "GET_PROPERTIES";
 export const GET_PROFILE = "GET_PROFILE";
 export const FAVORITES_LIST = "ADD_TO_FAVORITE";
 export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
+export const GET_SINGLE_PROPERTY = "GET_SINGLE_PROPERTY";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -155,6 +156,32 @@ export const getAllProperties = (token) => {
         dispatch({ type: GET_ALL_PROPERTIES, payload: data });
       } else {
         alert("Error while fetching the properties");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getSingleProperty = (token, propertyId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(baseEndPoint + "/properties/" + propertyId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: GET_SINGLE_PROPERTY, payload: data });
+      } else {
+        alert("Error while fetching the property");
       }
     } catch (error) {
       console.log(error);
