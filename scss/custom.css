@@ -38,6 +38,113 @@
   user-select: none;
 }
 
+<<<<<<< Updated upstream
+=======
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: inherit;
+}
+.image-container .card-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.heartIcon {
+  padding: 13px 10px 10px 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: #ECECEC;
+  transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.3s ease;
+}
+.heartIcon:hover {
+  background-color: #eae9f1;
+  border: 1px solid #ECECEC;
+  color: #D35353;
+  box-shadow: 1px 8px 15px -4px #b3b1b1;
+}
+
+#singlePostRectangle {
+  background: #ECECEC;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: #021933 solid 1px;
+}
+
+.btnProfile {
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btnProfile:hover {
+  background-color: #dfdcf0;
+}
+
+.favorite-thumbnail-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.favorite-thumbnail-wrapper .favorite-thumbnail {
+  display: block;
+  width: 100%;
+  height: 500px;
+}
+.favorite-thumbnail-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(59, 59, 59, 0.7) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0));
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 10px;
+}
+.favorite-thumbnail-wrapper:hover .overlay {
+  opacity: 1;
+}
+
+.heartIcon-fav-section {
+  padding: 13px 10px 10px 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: #ECECEC;
+  transition: font-size 0.3s ease, box-shadow 0.3s ease;
+}
+.heartIcon-fav-section:hover {
+  background: rgba(182, 212, 238, 0);
+  box-shadow: 0 8px 9px 0 rgba(31, 38, 135, 0.137);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 1px 8px 15px -4px #b3b1b1;
+}
+
+>>>>>>> Stashed changes
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
