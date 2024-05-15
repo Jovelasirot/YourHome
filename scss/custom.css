@@ -149,7 +149,22 @@
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 1px 8px 15px -4px #b3b1b1;
-  font-size: 21px !important;
+}
+
+.iconBtn {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: #ECECEC;
+  transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.3s ease;
+}
+.iconBtn:hover {
+  background-color: #eae9f1;
+  border: 1px solid #ECECEC;
+  box-shadow: 1px 8px 15px -4px #b3b1b1;
 }
 
 /*!
