@@ -53,7 +53,7 @@ const MainFilers = () => {
     }
   }, [dispatch, token, filters, safePrice]);
 
-  const hadnleModal = () => {
+  const handleModal = () => {
     setShowModal(true);
   };
 
@@ -142,7 +142,7 @@ const MainFilers = () => {
           <p className="mb-0">Price range:</p>
           <input
             className="form-control bg-primary  text-light"
-            onClick={(e) => hadnleModal()}
+            onClick={(e) => handleModal()}
             value={priceRange}
           />
         </Col>
