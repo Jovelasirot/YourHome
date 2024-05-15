@@ -67,6 +67,32 @@ export const loginUser = (payload) => {
   };
 };
 
+export const postImage = (token, image) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  return async (dispatch) => {
+    try {
+      const response = await fetch(baseEndPoint + "/users/me/avatar/upload", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("image", data);
+      } else {
+        alert("Error while posting the image");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
 export const getProperties = (token, filters) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });

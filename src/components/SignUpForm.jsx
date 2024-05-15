@@ -145,6 +145,7 @@ const SignUpForm = () => {
                       required
                     />
                   </Form.Group>
+
                   <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control

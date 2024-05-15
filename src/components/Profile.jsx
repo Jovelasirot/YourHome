@@ -1,12 +1,13 @@
-import { useEffect } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { getProfile } from "../../redux/actions/actions";
+import { getProfile, postImage } from "../../redux/actions/actions";
 import ProfileDxTopSection from "./ProfileDxTopSection";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [selectedFile, setSelectedFile] = useState(null);
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
   const location = useLocation();
@@ -16,6 +17,16 @@ const Profile = () => {
       dispatch(getProfile(token));
     }
   }, [dispatch, token]);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(postImage(token, selectedFile));
+  };
 
   return (
     <Container fluid className="vh-100">
@@ -31,6 +42,13 @@ const Profile = () => {
                   className="mt-5 rounded-circle"
                   alt="profile picture"
                 />
+                <Form.Group className="mb-3" controlId="image">
+                  <Form.Label>Upload Image</Form.Label>
+                  <input type="file" onChange={handleFileChange} />
+                </Form.Group>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Img
+                </Button>
                 <Card.Body className="d-flex flex-column align-items-center justify-content-center">
                   <Card.Title className="fs-3 text-center">
                     {profile.name} {profile.surname}
