@@ -129,7 +129,7 @@ export const getProperties = (token, filters) => {
         dispatch({ type: GET_PROPERTIES, payload: data });
       } else {
         alert(
-          "Error while fetching the properties, select all the input for the filters."
+          "Error while fetching the properties, fill the filters inputs correctly"
         );
       }
     } catch (error) {

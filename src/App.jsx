@@ -9,6 +9,7 @@ import MyNavBar from "./components/MyNavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import FavoriteSection from "./components/FavoriteSection";
 import ViewMoreSection from "./components/ViewMoreSection";
+import SellForm from "./components/SellForm";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -44,6 +45,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/sell"
+            element={
+              <ProtectedRoute>
+                <SellForm />
               </ProtectedRoute>
             }
           />

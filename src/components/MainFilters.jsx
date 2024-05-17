@@ -154,7 +154,7 @@ const MainFilers = () => {
           />
         </Col>
         <Col xs={12} md={3} xl={1} className="mt-3">
-          <p className="mb-0">Area:</p>
+          <p className="mb-0">Minimum m²:</p>
           <input
             className="form-control bg-primary  text-light"
             value={filters.minArea}

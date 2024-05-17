@@ -4,15 +4,12 @@ import MainFilers from "./MainFilters";
 
 const HomePage = () => {
   return (
-    <Container fluid>
+    <Container fluid className="">
       <Row className="px-5 pb-5 mb-5 border-bottom ">
         <MainFilers />
       </Row>
-      <Container className="vh-100">
-        <Row xs={1} md={2} className="justify-content-center g-5">
-          <SinglePost />
-        </Row>
-      </Container>
+
+      <SinglePost />
     </Container>
   );
 };
