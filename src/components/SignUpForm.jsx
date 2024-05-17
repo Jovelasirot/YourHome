@@ -83,7 +83,7 @@ const SignUpForm = () => {
         <Col>
           <Card id="signUpRectangle" className="py-5  px-5">
             <Link to="/" className="text-decoration-none ">
-              <i className="bi bi bi-arrow-left fs-3"></i>
+              <i className="bi bi bi-arrow-left fs-3 iconBtn"></i>
             </Link>
             <Card.Body className="d-flex flex-column">
               <Card.Title className="fs-3 fw-light border-bottom">

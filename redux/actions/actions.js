@@ -9,6 +9,7 @@ export const GET_PROFILE = "GET_PROFILE";
 export const FAVORITES_LIST = "ADD_TO_FAVORITE";
 export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
 export const GET_SINGLE_PROPERTY = "GET_SINGLE_PROPERTY";
+export const SELL_PROPERTY = "SELL_PROPERTY";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -263,6 +264,35 @@ export const updateFavoritesList = (token, propertyId) => {
         dispatch(getFavoriteList(token));
       } else {
         alert("Error while updating favorites");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const sellProperty = (token, payload) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      dispatch({ type: TURN_ON_SPINNER });
+      const response = await fetch(baseEndPoint + "/properties/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: SELL_PROPERTY, payload: data });
+        alert("Property posted correctly");
+      } else {
+        alert("Error while posting you property");
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

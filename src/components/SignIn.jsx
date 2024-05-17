@@ -67,7 +67,7 @@ const SignIn = () => {
             <Row>
               <Col>
                 <Link to="/" className="text-decoration-none ">
-                  <i className="bi bi bi-arrow-left fs-3"></i>
+                  <i className="bi bi bi-arrow-left fs-3 iconBtn"></i>
                 </Link>
               </Col>
               <Col className="d-flex justify-content-end ">

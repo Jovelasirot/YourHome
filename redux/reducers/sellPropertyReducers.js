@@ -1,7 +1,7 @@
 import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
-  ADD_TO_FAVORITE,
+  SELL_PROPERTY,
 } from "../actions/actions";
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
 };
 
-const postToFavorite = (state = initialState, action) => {
+const sellPropertyReducers = (state = initialState, action) => {
   switch (action.type) {
     case TURN_ON_SPINNER:
       return {
@@ -21,7 +21,7 @@ const postToFavorite = (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case ADD_TO_FAVORITE:
+    case SELL_PROPERTY:
       return {
         ...state,
         content: action.payload,
@@ -32,4 +32,4 @@ const postToFavorite = (state = initialState, action) => {
   }
 };
 
-export default postToFavorite;
+export default sellPropertyReducers;
