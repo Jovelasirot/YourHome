@@ -174,6 +174,23 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMA
   }
 }
 
+.iconBtnGlass{
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: $secondary;
+  transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.3s ease;
+  &:hover {
+    background: rgba( 188, 218, 245, 0.1 );
+    box-shadow: 0 8px 9px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 6px );
+    -webkit-backdrop-filter: blur( 6px );
+    border: 1px solid rgba(255, 255, 255, 0.39);
+  }
+}
 
 
 @import url('https://fonts.cdnfonts.com/css/satoshi');

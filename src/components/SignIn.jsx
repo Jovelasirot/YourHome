@@ -46,18 +46,9 @@ const SignIn = () => {
   };
 
   const isFormIncomplete =
-    Object.entries(formData).some(([key, value]) => {
-      if (value === "") {
-        return true;
-      }
-      if (
-        (key === "email" && emailStored) ||
-        (key === "password" && passwordStored)
-      ) {
-        return false;
-      }
-      return false;
-    }) && !(emailStored && passwordStored);
+    Object.values(formData).some((value) => value === "") ||
+    !emailStored ||
+    !passwordStored;
 
   return (
     <Container fluid className="signImgBg">
@@ -67,7 +58,7 @@ const SignIn = () => {
             <Row>
               <Col>
                 <Link to="/" className="text-decoration-none ">
-                  <i className="bi bi bi-arrow-left fs-3 iconBtn"></i>
+                  <i className="bi bi bi-arrow-left fs-3 iconBtnGlass"></i>
                 </Link>
               </Col>
               <Col className="d-flex justify-content-end ">

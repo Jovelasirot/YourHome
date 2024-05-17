@@ -28,11 +28,27 @@ const SellForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(sellProperty(token, formData));
-    console.log(formData);
+    if (formData.price <= 0) {
+      alert("Price can be less than zero");
+    } else {
+      dispatch(sellProperty(token, formData));
+    }
   };
 
   const isMdScreen = useMediaQuery({ minWidth: 768 });
+
+  const isFormComplete = () => {
+    return (
+      formData.country !== "" &&
+      formData.city !== "" &&
+      formData.address !== "" &&
+      formData.bedrooms !== "" &&
+      formData.bathrooms !== "" &&
+      formData.propertyType !== "" &&
+      formData.propertyStatus !== "" &&
+      formData.description !== ""
+    );
+  };
 
   const countryOptions = [
     { value: "Austria", label: "Austria" },
@@ -67,7 +83,7 @@ const SellForm = () => {
         <Col>
           <Card className="py-5 bg-secondary shadow border-0   px-5">
             <Col>
-              <Link to="/" className="text-decoration-none ">
+              <Link to="/homepage" className="text-decoration-none ">
                 <i className="bi bi bi-arrow-left iconBtn fs-3"></i>
               </Link>
             </Col>
@@ -178,6 +194,16 @@ const SellForm = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Form.Group className="mb-3" controlId="price">
+                    <Form.Label>Price</Form.Label>;
+                    <Form.Control
+                      placeholder="Price"
+                      className="w-100"
+                      onChange={handleChange}
+                      value={formData.price}
+                      required
+                    />
+                  </Form.Group>
                   <Form.Group className="mb-3" controlId="description">
                     <Form.Label>Description</Form.Label>;
                     <Form.Control
@@ -197,6 +223,7 @@ const SellForm = () => {
                 variant="primary w-100"
                 type="submit"
                 onClick={handleSubmit}
+                disabled={!isFormComplete()}
               >
                 Post property
               </Button>
