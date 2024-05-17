@@ -10,18 +10,6 @@ const ProfileDxTopSection = () => {
   const [showProperty, setShowProperty] = useState(true);
   const [showChat, setShowChat] = useState(true);
 
-  const toggleFavorites = () => {
-    setShowFavorites(!showFavorites);
-  };
-
-  const toggleProperty = () => {
-    setShowProperty(!showProperty);
-  };
-
-  const toggleChat = () => {
-    setShowChat(!showChat);
-  };
-
   const [activeSection, setActiveSection] = useState("favorites");
   const handleToggle = (section) => {
     setActiveSection(section);
@@ -47,7 +35,7 @@ const ProfileDxTopSection = () => {
             }`}
             onClick={() => handleToggle("property")}
           >
-            Your property
+            Your real state
           </div>
         </div>
         <div>

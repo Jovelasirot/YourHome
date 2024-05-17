@@ -113,7 +113,6 @@ export const getProperties = (token, filters) => {
         delete safeFilters.propertyType;
       }
       const queryParams = new URLSearchParams(safeFilters).toString();
-      console.log(queryParams);
       const response = await fetch(
         baseEndPoint + "/properties" + "/search" + "?" + queryParams,
         {
@@ -296,6 +295,30 @@ export const sellProperty = (token, payload) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const deleteProperty = (token, propertyId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(`${baseEndPoint}/properties/${propertyId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        alert("Property deleted successfully");
+      } else {
+        alert("Error while deleting the property");
+      }
+    } catch (error) {
+      console.error("Error deleting property:", error);
+      alert("An error occurred while deleting the property");
     } finally {
       dispatch({ type: TURN_OFF_SPINNER });
     }

@@ -8,6 +8,7 @@ import Select from "react-select";
 
 const SellForm = () => {
   const token = localStorage.getItem("token");
+  console.log(token);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     country: "",
@@ -202,6 +203,7 @@ const SellForm = () => {
                       onChange={handleChange}
                       value={formData.price}
                       required
+                      type="number"
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="description">
