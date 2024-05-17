@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { sellProperty } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
@@ -21,8 +29,9 @@ const SellForm = () => {
     propertyStatus: "",
     description: "",
   });
-  const [previewImgs, setPreviewImgs] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [previewImgs, setPreviewImgs] = useState([]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -82,11 +91,14 @@ const SellForm = () => {
   const handleFileChange = (event) => {
     const files = event.target.files;
     const selectedImgs = [];
+    const previews = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       selectedImgs.push(file);
       setSelectedFiles(selectedImgs);
+      previews.push(URL.createObjectURL(file));
     }
+    setPreviewImgs(previews);
   };
 
   return (
@@ -213,6 +225,7 @@ const SellForm = () => {
                       type="number"
                     />
                   </Form.Group>
+                  <Button onClick={() => setShowModal(true)}>Add images</Button>
                   <Form.Group className="mb-3" controlId="description">
                     <Form.Label>Description</Form.Label>;
                     <Form.Control
@@ -225,25 +238,6 @@ const SellForm = () => {
                       style={{ height: "200px", resize: "none" }}
                     />
                   </Form.Group>
-                  <Row className="flex-column align-items-center">
-                    <Col>
-                      <Form.Group className="mb-3" controlId="image">
-                        <div className="d-flex align-items-center justify-content-center ">
-                          <span className="fs-5">Select image</span>
-                          <label htmlFor="upload-photo">
-                            <i className="bi bi-image ms-3 fs-5 text-muted iconBtn"></i>
-                          </label>
-                          <input
-                            type="file"
-                            id="upload-photo"
-                            onChange={handleFileChange}
-                            className="d-none"
-                            multiple
-                          />
-                        </div>
-                      </Form.Group>
-                    </Col>
-                  </Row>
                 </Form>
               </Card.Text>
 
@@ -259,6 +253,46 @@ const SellForm = () => {
           </Card>
         </Col>
       </Row>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Images</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="image">
+            <div className="d-flex align-items-center">
+              <div>
+                <span>Select images</span>
+              </div>
+              <label htmlFor="upload-photo">
+                <i className="bi bi-image fs-5 text-muted iconBtn"></i>
+              </label>
+            </div>
+            <input
+              type="file"
+              id="upload-photo"
+              onChange={handleFileChange}
+              className="d-none"
+              multiple
+            />
+            <div className="d-flex flex-wrap">
+              {previewImgs.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Preview image ${index + 1}`}
+                  className="img-thumbnail m-2"
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
+                />
+              ))}
+            </div>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Save selected images
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
