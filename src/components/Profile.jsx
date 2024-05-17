@@ -20,7 +20,6 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
-  const location = useLocation();
 
   useEffect(() => {
     if (token) {

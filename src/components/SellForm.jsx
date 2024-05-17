@@ -8,7 +8,6 @@ import Select from "react-select";
 
 const SellForm = () => {
   const token = localStorage.getItem("token");
-  console.log(token);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     country: "",
@@ -22,6 +21,8 @@ const SellForm = () => {
     propertyStatus: "",
     description: "",
   });
+  const [previewImgs, setPreviewImgs] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -32,7 +33,7 @@ const SellForm = () => {
     if (formData.price <= 0) {
       alert("Price can be less than zero");
     } else {
-      dispatch(sellProperty(token, formData));
+      dispatch(sellProperty(token, formData, selectedFiles));
     }
   };
 
@@ -78,6 +79,16 @@ const SellForm = () => {
     setFormData({ ...formData, country: selectedOption.value });
   };
 
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const selectedImgs = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      selectedImgs.push(file);
+      setSelectedFiles(selectedImgs);
+    }
+  };
+
   return (
     <Container>
       <Row className={isMdScreen ? "vh-100 align-items-center" : "vh-100 mt-5"}>
@@ -92,10 +103,6 @@ const SellForm = () => {
               <Card.Title className="fs-3 fw-light border-bottom">
                 <span className="fw-bold text-primary">Sell Your home </span>
                 with us
-                <span className="invisble">
-                  ‎ ‎ ‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎
-                  ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎‎ ‎ ‎
-                </span>
               </Card.Title>
               <Card.Text>
                 <Form onSubmit={handleSubmit}>
@@ -218,6 +225,25 @@ const SellForm = () => {
                       style={{ height: "200px", resize: "none" }}
                     />
                   </Form.Group>
+                  <Row className="flex-column align-items-center">
+                    <Col>
+                      <Form.Group className="mb-3" controlId="image">
+                        <div className="d-flex align-items-center justify-content-center ">
+                          <span className="fs-5">Select image</span>
+                          <label htmlFor="upload-photo">
+                            <i className="bi bi-image ms-3 fs-5 text-muted iconBtn"></i>
+                          </label>
+                          <input
+                            type="file"
+                            id="upload-photo"
+                            onChange={handleFileChange}
+                            className="d-none"
+                            multiple
+                          />
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                 </Form>
               </Card.Text>
 

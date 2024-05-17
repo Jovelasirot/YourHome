@@ -272,7 +272,7 @@ export const updateFavoritesList = (token, propertyId) => {
   };
 };
 
-export const sellProperty = (token, payload) => {
+export const sellProperty = (token, payload, images) => {
   return async (dispatch) => {
     dispatch({ type: TURN_ON_SPINNER });
     try {
@@ -289,9 +289,41 @@ export const sellProperty = (token, payload) => {
         const data = await response.json();
         dispatch({ type: SELL_PROPERTY, payload: data });
         alert("Property posted correctly");
+        dispatch(postImageProperty(token, data.propertyId, images));
       } else {
         alert("Error while posting you property");
         window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const postImageProperty = (token, propertyId, images) => {
+  const formData = new FormData();
+  images.forEach((image) => {
+    formData.append("images", image);
+  });
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        baseEndPoint + "/properties/add/" + propertyId + "/images",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("image", data);
+      } else {
+        alert("Error while posting the image");
       }
     } catch (error) {
       console.log(error);

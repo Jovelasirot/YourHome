@@ -85,7 +85,9 @@ const PersonalPropertySection = () => {
               <img
                 src={property.images[0]}
                 alt="property picture"
-                className="rounded-2 favorite-thumbnail"
+                className="rounded-2"
+                width={"400 px"}
+                height={"200 px"}
               />
             </Modal.Body>
             <Modal.Footer className="bg-secondary">
