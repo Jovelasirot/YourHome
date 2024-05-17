@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { getProperties } from "../../redux/actions/actions";
+import Select from "react-select";
 
 const MainFilers = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const MainFilers = () => {
     return savedFilters
       ? JSON.parse(savedFilters)
       : {
+          country: "",
           city: "",
           minPrice: "",
           maxPrice: "",
@@ -58,22 +60,59 @@ const MainFilers = () => {
   };
 
   const handleHideModal = () => {
-    if (parseFloat(filters.minPrice) >= parseFloat(filters.maxPrice)) {
+    if (parseFloat(minPrice) >= parseFloat(maxPrice)) {
       alert("Minimum price should be less than maximum price");
     } else {
+      const updatedFilters = {
+        ...filters,
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice,
+      };
+      setFilters(updatedFilters);
       setShowModal(false);
       setSafePrice(true);
     }
   };
 
   const [priceRange, setPriceRange] = useState("");
+  const [minPrice, setMinPrice] = useState(filters.minPrice);
+  const [maxPrice, setMaxPrice] = useState(filters.maxPrice);
+
+  const countryOptions = [
+    { value: "Austria", label: "Austria" },
+    { value: "Belgium", label: "Belgium" },
+    { value: "Canada", label: "Canada" },
+    { value: "Denmark", label: "Denmark" },
+    { value: "Finland", label: "Finland" },
+    { value: "France", label: "France" },
+    { value: "Germany", label: "Germany" },
+    { value: "Greece", label: "Greece" },
+    { value: "Italy", label: "Italy" },
+    { value: "Monaco", label: "Monaco" },
+    { value: "Netherlands", label: "Netherlands" },
+    { value: "Norway", label: "Norway" },
+    { value: "Poland", label: "Poland" },
+    { value: "Portugal", label: "Portugal" },
+    { value: "San Marino", label: "San Marino" },
+    { value: "Spain", label: "Spain" },
+    { value: "Sweden", label: "Sweden" },
+    { value: "Switzerland", label: "Switzerland" },
+    { value: "United Kingdom", label: "United Kingdom" },
+    { value: "United States", label: "United States" },
+  ];
+
+  const handleCountryChange = (selectedOption) => {
+    setFilters({ ...filters, country: selectedOption.value });
+  };
 
   return (
     <>
-      <Row>
+      <Row className="pt-3">
         <Col xs={12}>
-          <h1>Filters:</h1>
+          <h1 className="mb-0">Filters:</h1>
         </Col>
+      </Row>
+      <Row>
         <Col xs={12} md={3} xl={2} className="mt-3">
           <p className="mb-0">City:</p>
           <input
@@ -81,6 +120,22 @@ const MainFilers = () => {
             value={filters.city}
             onChange={(e) => handleInputChange(e, "city")}
           />
+        </Col>
+        <Col xs={12} md={2} xl={1} className="mt-3">
+          <p className="mb-0">Country:</p>
+          <Form.Select
+            className="form-select bg-primary rounded-4 text-light"
+            aria-label="Country"
+            value={filters.country}
+            onChange={(e) => handleInputChange(e, "country")}
+          >
+            <option value="">Select country</option>
+            {countryOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Form.Select>
         </Col>
         <Col xs={12} md={3} xl={1} className="mt-3">
           <p className="mb-0">Bedrooms:</p>
@@ -138,7 +193,7 @@ const MainFilers = () => {
             <option value="LAND">Land</option>
           </Form.Select>
         </Col>
-        <Col xs={12} md={4} xl={3} className="mt-3">
+        <Col xs={12} md={4} xl={2} className="mt-3">
           <p className="mb-0">Price range:</p>
           <input
             className="form-control bg-primary  text-light"
@@ -151,22 +206,22 @@ const MainFilers = () => {
           <Modal.Header closeButton className="bg-secondary ">
             <Modal.Title>Price range</Modal.Title>
           </Modal.Header>
-          <Modal.Body className="bg-secondary rounded-bottom-5">
+          <Modal.Body className="bg-secondary rounded-bottom-2">
             <Row className="flex-column">
               <Col>
                 Minimum price:
                 <input
                   className="form-control bg-secondary "
-                  value={filters.minPrice}
-                  onChange={(e) => handleInputChange(e, "minPrice")}
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
                 />
               </Col>
               <Col className="my-3">
                 Maximum price:
                 <input
                   className="form-control bg-secondary "
-                  value={filters.maxPrice}
-                  onChange={(e) => handleInputChange(e, "maxPrice")}
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
                 />
               </Col>
               <Col>

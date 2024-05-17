@@ -112,6 +112,7 @@ export const getProperties = (token, filters) => {
         delete safeFilters.propertyType;
       }
       const queryParams = new URLSearchParams(safeFilters).toString();
+      console.log(queryParams);
       const response = await fetch(
         baseEndPoint + "/properties" + "/search" + "?" + queryParams,
         {
