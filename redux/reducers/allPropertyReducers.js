@@ -1,15 +1,15 @@
 import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
-  REGISTER_USER,
+  GET_ALL_PROPERTIES,
 } from "../actions/actions";
 
 const initialState = {
-  content: {},
+  content: [],
   loading: false,
 };
 
-const signUpReducers = (state = initialState, action) => {
+const getAllProperties = (state = initialState, action) => {
   switch (action.type) {
     case TURN_ON_SPINNER:
       return {
@@ -21,7 +21,7 @@ const signUpReducers = (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case REGISTER_USER:
+    case GET_ALL_PROPERTIES:
       return {
         ...state,
         content: action.payload,
@@ -32,4 +32,4 @@ const signUpReducers = (state = initialState, action) => {
   }
 };
 
-export default signUpReducers;
+export default getAllProperties;

@@ -13,7 +13,6 @@ const MyNavBar = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
-  const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,16 +21,6 @@ const MyNavBar = () => {
       dispatch(getProfile(token));
     }
   }, [dispatch, token]);
-
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  const handleLogOut = () => {
-    localStorage.removeItem("token");
-    setShowDropdown(!showDropdown);
-    navigate("/");
-  };
 
   return (
     <Navbar expand="lg" className="bg-secondary border-bottom py-0 ">
@@ -92,39 +81,11 @@ const MyNavBar = () => {
                       alt="test"
                       width="35"
                       height="35"
-                      className="rounded-circle border border-primary"
-                      onClick={toggleDropdown}
+                      className={`rounded-circle border border-primary ${
+                        location.pathname === "/profile" ? "shadow" : ""
+                      }`}
+                      onClick={() => navigate("/profile")}
                     />
-                    {showDropdown && (
-                      <Dropdown show={showDropdown}>
-                        <Dropdown.Menu
-                          align="end"
-                          className="bg-secondary p-0 "
-                        >
-                          <Dropdown.Item>
-                            <Link
-                              to="/profile"
-                              className={`text-decoration-none me-lg-4 ${
-                                location.pathname === "/profile"
-                                  ? "text-dark"
-                                  : "text-muted"
-                              }`}
-                              onClick={toggleDropdown}
-                            >
-                              Your profile{" "}
-                            </Link>
-                          </Dropdown.Item>
-
-                          <Dropdown.Item href="#/action-2">Saved</Dropdown.Item>
-                          <Dropdown.Item
-                            className="text-decoration-none border-top me-lg-4 text-danger"
-                            onClick={handleLogOut}
-                          >
-                            Log out
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    )}
                   </>
                 ) : (
                   <Link to="/">

@@ -1,7 +1,7 @@
 import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
-  REGISTER_USER,
+  SELL_PROPERTY,
 } from "../actions/actions";
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
 };
 
-const signUpReducers = (state = initialState, action) => {
+const sellPropertyReducers = (state = initialState, action) => {
   switch (action.type) {
     case TURN_ON_SPINNER:
       return {
@@ -21,7 +21,7 @@ const signUpReducers = (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case REGISTER_USER:
+    case SELL_PROPERTY:
       return {
         ...state,
         content: action.payload,
@@ -32,4 +32,4 @@ const signUpReducers = (state = initialState, action) => {
   }
 };
 
-export default signUpReducers;
+export default sellPropertyReducers;
