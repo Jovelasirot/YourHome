@@ -50,30 +50,33 @@ const PersonalPropertySection = () => {
               alt="property picture"
               className="rounded-2 favorite-thumbnail"
             />
-
-            <div className="overlay flex-column align-items-center">
-              <div>
-                <i
-                  className="bi bi-trash fs-4 heartIcon-fav-section text-danger"
-                  onClick={() => handleModalConfirmation(property.id)}
-                />
-              </div>
-
-              <div className="d-flex">
-                <div className="d-flex flex-column justify-content-end">
-                  <div className="flex-column">
-                    <div className="fw-bold">{property.address}</div>
-                    <div>{property.country}</div>
-                  </div>
-                </div>
-
-                <div className="d-flex flex-column justify-content-end text-end">
-                  <Link to="/">
+            <Row className="overlay flex-column align-items-center">
+              <Col>
+                <Row>
+                  <Col>
+                    <div>
+                      <i
+                        className="bi bi-trash fs-4 heartIcon-fav-section text-danger"
+                        onClick={() => handleModalConfirmation(property.id)}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+              <Col className="d-flex">
+                <Col className="d-flex flex-column justify-content-end">
+                  <Row className="flex-column">
+                    <Col className="fw-bold">{property.address}</Col>
+                    <Col>{property.country}</Col>
+                  </Row>
+                </Col>
+                <Col className="d-flex flex-column justify-content-end text-end">
+                  <Link to={`/homepage/details/${property.id}`}>
                     <Button variant="secondary">View more</Button>
                   </Link>
-                </div>
-              </div>
-            </div>
+                </Col>
+              </Col>
+            </Row>
           </div>
           <Modal show={showConfirmation} onHide={handleCancelDelete}>
             <Modal.Header closeButton className="bg-secondary">
@@ -85,7 +88,6 @@ const PersonalPropertySection = () => {
               <img
                 src={property.images[0]}
                 alt="property picture"
-                className="rounded-2"
                 width={"400 px"}
                 height={"200 px"}
               />

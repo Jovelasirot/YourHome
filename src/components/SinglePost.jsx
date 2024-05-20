@@ -88,13 +88,13 @@ const SinglePost = () => {
                     <Row className="justify-content-between mt-5">
                       <Col>
                         <Link to={`/homepage/details/${property.id}`}>
-                          <Button variant="primary" className="w-100">
+                          <Button variant="primary" className="w-100 h-100 ">
                             View more
                           </Button>
                         </Link>
                       </Col>
                       <Col>
-                        <Button variant="success" className="w-100">
+                        <Button variant="success" className="w-100 h-100 ">
                           Contant the seller
                         </Button>
                       </Col>

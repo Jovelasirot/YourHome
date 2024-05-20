@@ -6,6 +6,7 @@ import { getProfile, getSingleProperty } from "../../redux/actions/actions";
 import blueprint from "../assets/Img/blueprint.png";
 import bedroom from "../assets/Img/bedroom.png";
 import bathroom from "../assets/Img/bathroom.png";
+import { useMediaQuery } from "react-responsive";
 
 const ViewMoreSection = () => {
   const { propertyId } = useParams();
@@ -21,9 +22,9 @@ const ViewMoreSection = () => {
   }, [dispatch]);
 
   const property = useSelector((state) => state.singleProperty.content);
-
+  const isMdScreen = useMediaQuery({ minWidth: 768 });
   return (
-    <Container className="vh-100">
+    <Container className={isMdScreen ? "vh-100" : ""}>
       <Row className="align-items-center">
         <Col className="mt-4 shadow rounded-2  ">
           <Link to="/homepage" className="text-decoration-none ">

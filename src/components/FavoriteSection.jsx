@@ -76,7 +76,7 @@ const FavoriteSection = () => {
                       </Row>
                     </Col>
                     <Col className="d-flex flex-column justify-content-end text-end">
-                      <Link to="/">
+                      <Link to={`/homepage/details/${favoriteProperty.id}`}>
                         <Button variant="secondary">View more</Button>
                       </Link>
                     </Col>

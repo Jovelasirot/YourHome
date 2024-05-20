@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { getProfile, postImage } from "../../redux/actions/actions";
 import ProfileDxTopSection from "./ProfileDxTopSection";
+import { useMediaQuery } from "react-responsive";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
+  const isMdScreen = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     if (token) {
@@ -49,7 +51,7 @@ const Profile = () => {
   };
 
   return (
-    <Container fluid className="vh-100">
+    <Container fluid className={isMdScreen ? "vh-100" : ""}>
       <Row>
         <Col lg={2}>
           <Row className="flex-column g-5 p-5">

@@ -6,10 +6,6 @@ import ChatSection from "./ChatSection";
 import PersonalPropertySection from "./PersonalPropertySection";
 
 const ProfileDxTopSection = () => {
-  const [showFavorites, setShowFavorites] = useState(true);
-  const [showProperty, setShowProperty] = useState(true);
-  const [showChat, setShowChat] = useState(true);
-
   const [activeSection, setActiveSection] = useState("favorites");
   const handleToggle = (section) => {
     setActiveSection(section);
@@ -49,7 +45,7 @@ const ProfileDxTopSection = () => {
           </div>
         </div>
       </Col>
-      <Col className="mt-2 vh-100">
+      <Col className="mt-2">
         {" "}
         {activeSection === "favorites" && <FavoriteSection />}
         {activeSection === "property" && <PersonalPropertySection />}
