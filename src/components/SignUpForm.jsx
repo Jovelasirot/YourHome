@@ -1,10 +1,20 @@
-import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  InputGroup,
+  ProgressBar,
+  Row,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { registerUser } from "../../redux/actions/actions";
 import Select from "react-select";
+import zxcvbn from "zxcvbn";
+import { useMediaQuery } from "react-responsive";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -17,19 +27,11 @@ const SignUpForm = () => {
     username: "",
     password: "",
   });
+  const isMdScreen = useMediaQuery({ minWidth: 768 });
+  const emailRgx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-    } else {
-      dispatch(registerUser(formData));
-      alert("Registration successful!");
-    }
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -68,12 +70,46 @@ const SignUpForm = () => {
     setFormData({ ...formData, country: selectedOption.value });
   };
 
+  const getPasswordStrength = () => {
+    const result = zxcvbn(formData.password);
+    return (result.score + 1) * 25;
+  };
+
+  const getPasswordStrengthColor = () => {
+    const strength = getPasswordStrength();
+    if (strength <= 25) return "danger";
+    if (strength <= 50) return "warning";
+    if (strength <= 75) return "info";
+    return "success";
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const strength = zxcvbn(formData.password).score;
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+    } else if (strength <= 2) {
+      alert("Weak password, try another one");
+    } else if (!emailRgx.test(formData.email)) {
+      alert("Invalid email format, please enter a valid email address.");
+    } else {
+      dispatch(registerUser(formData));
+      alert("Registration successful!");
+    }
+  };
+
   return (
-    <Container fluid className="signImgBg">
+    <Container
+      fluid
+      className="signImgBg vh-100 justify-content-center align-items-center"
+    >
       <Row className="align-itmes-center">
         <Col>
-          <Card id="signUpRectangle" className="py-5  px-5">
-            <Link to="/" className="text-decoration-none ">
+          <Card id="signUpRectangle" className={isMdScreen ? "p-5 " : ""}>
+            <Link
+              to="/"
+              className={`text-decoration-none ${isMdScreen ? "" : "m-3"}`}
+            >
               <i className="bi bi bi-arrow-left fs-3"></i>
             </Link>
             <Card.Body className="d-flex flex-column">
@@ -163,10 +199,27 @@ const SignUpForm = () => {
                         ></i>
                       </InputGroup.Text>
                     </InputGroup>
+                    {formData.password && (
+                      <>
+                        <ProgressBar
+                          now={getPasswordStrength()}
+                          variant={getPasswordStrengthColor()}
+                          className="mt-2"
+                        />
+                        {getPasswordStrengthColor() !== "success" ? (
+                          <p className="mb-0 ">
+                            Try using special characters, capital characters,
+                            numbers
+                          </p>
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    )}
                   </Form.Group>
                   {formData.password && (
                     <Form.Group className="mb-3" controlId="confirmPassword">
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label>Confirm password</Form.Label>
                       <InputGroup>
                         <Form.Control
                           type={showPassword ? "text" : "password"}

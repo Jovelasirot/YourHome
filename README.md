@@ -27,6 +27,8 @@ For the back-end repo go here --> https://github.com/Jovelasirot/YourHomeDB
 
 **Server:** Spring Framework, PostgreSQL
 
+**Libraries:** React-dom, react-router-dom, react-responsive, react-select, zxcvbn
+
 ## Authors
 
 - [@Jovelasirot](https://github.com/Jovelasirot)
