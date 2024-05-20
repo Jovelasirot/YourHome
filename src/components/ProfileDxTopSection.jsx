@@ -4,19 +4,25 @@ import { Link } from "react-router-dom";
 import FavoriteSection from "./FavoriteSection";
 import ChatSection from "./ChatSection";
 import PersonalPropertySection from "./PersonalPropertySection";
+import { useMediaQuery } from "react-responsive";
 
 const ProfileDxTopSection = () => {
   const [activeSection, setActiveSection] = useState("favorites");
   const handleToggle = (section) => {
     setActiveSection(section);
   };
+  const isXxlScreen = useMediaQuery({ minWidth: 1400 });
 
   return (
-    <Row className="flex-column p-5">
-      <Col className="d-flex">
-        <div className="border-end ">
+    <Row className="flex-column mt-5 ">
+      <Col
+        className={`d-flex ${
+          isXxlScreen ? "" : "justify-content-center align-items-center"
+        }`}
+      >
+        <div className="border-end">
           <div
-            className={`mx-3 btnProfile ${
+            className={`mx-3 btnProfile text-center ${
               activeSection === "favorites" ? "bg-primary text-light" : ""
             }`}
             onClick={() => handleToggle("favorites")}
@@ -26,7 +32,7 @@ const ProfileDxTopSection = () => {
         </div>
         <div className="border-end ">
           <div
-            className={`mx-3 btnProfile ${
+            className={`mx-3 btnProfile text-center  ${
               activeSection === "property" ? "bg-primary text-light" : ""
             }`}
             onClick={() => handleToggle("property")}
@@ -36,7 +42,7 @@ const ProfileDxTopSection = () => {
         </div>
         <div>
           <div
-            className={`mx-3 btnProfile ${
+            className={`mx-3 btnProfile text-center ${
               activeSection === "chat" ? "bg-primary text-light" : ""
             }`}
             onClick={() => handleToggle("chat")}

@@ -112,8 +112,8 @@ const MainFilers = () => {
           <h1 className="mb-0">Filters:</h1>
         </Col>
       </Row>
-      <Row>
-        <Col xs={12} md={3} xl={2} className="mt-3">
+      <Row className="mt-3">
+        <Col xs={12} md={3} xl={2}>
           <p className="mb-0">City:</p>
           <input
             className="form-control bg-primary border text-light"
@@ -121,7 +121,7 @@ const MainFilers = () => {
             onChange={(e) => handleInputChange(e, "city")}
           />
         </Col>
-        <Col xs={12} md={2} xl={1} className="mt-3">
+        <Col xs={12} md={2} xl={1}>
           <p className="mb-0">Country:</p>
           <Form.Select
             className="form-select bg-primary rounded-4 text-light"
@@ -137,7 +137,7 @@ const MainFilers = () => {
             ))}
           </Form.Select>
         </Col>
-        <Col xs={12} md={3} xl={1} className="mt-3">
+        <Col xs={12} md={3} xl={1}>
           <p className="mb-0">Bedrooms:</p>
           <input
             className="form-control bg-primary  text-light"
@@ -145,7 +145,7 @@ const MainFilers = () => {
             onChange={(e) => handleInputChange(e, "minBedrooms")}
           />
         </Col>
-        <Col xs={12} md={3} xl={1} className="mt-3">
+        <Col xs={12} md={3} xl={1} className="">
           <p className="mb-0">Bathrooms:</p>
           <input
             className="form-control bg-primary  text-light"
@@ -153,15 +153,15 @@ const MainFilers = () => {
             onChange={(e) => handleInputChange(e, "minBathrooms")}
           />
         </Col>
-        <Col xs={12} md={3} xl={1} className="mt-3">
-          <p className="mb-0">Minimum m²:</p>
+        <Col xs={12} md={3} xl={1}>
+          <p className="mb-0">Min m²:</p>
           <input
             className="form-control bg-primary  text-light"
             value={filters.minArea}
             onChange={(e) => handleInputChange(e, "minArea")}
           />
         </Col>
-        <Col xs={12} md={3} xl={2} className="mt-3">
+        <Col xs={12} md={3} xl={2}>
           <p className="mb-0">Interior status:</p>
           <Form.Select
             className="form-select bg-primary rounded-4 text-light"
@@ -176,7 +176,7 @@ const MainFilers = () => {
             <option value="TO_BE_RESTORED">To be restored</option>
           </Form.Select>
         </Col>
-        <Col xs={12} md={3} xl={2} className="mt-3">
+        <Col xs={12} md={3} xl={2}>
           <p className="mb-0">Property type:</p>
           <Form.Select
             variant="primary"
@@ -193,7 +193,7 @@ const MainFilers = () => {
             <option value="LAND">Land</option>
           </Form.Select>
         </Col>
-        <Col xs={12} md={4} xl={2} className="mt-3">
+        <Col xs={12} md={4} xl={2}>
           <p className="mb-0">Price range:</p>
           <input
             className="form-control bg-primary  text-light"

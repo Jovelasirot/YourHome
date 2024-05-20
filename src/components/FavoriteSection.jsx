@@ -35,7 +35,7 @@ const FavoriteSection = () => {
   }
 
   return (
-    <Row>
+    <Row xs={1} md={2} xl={3}>
       {favoriteList &&
         properties &&
         favoriteList.map((favoriteId) => {
@@ -43,12 +43,12 @@ const FavoriteSection = () => {
             (property) => property.id === favoriteId
           );
           return (
-            <Col key={favoriteId} lg={4} className="g-4">
+            <Col key={favoriteId} className="g-4">
               <div className="favorite-thumbnail-wrapper">
                 <img
                   src={favoriteProperty.images[0]}
                   alt="property picture"
-                  className=" rounded-2 favorite-thumbnail"
+                  className=" rounded-2 favorite-thumbnail  "
                 />
 
                 <Row className="overlay flex-column align-items-center">

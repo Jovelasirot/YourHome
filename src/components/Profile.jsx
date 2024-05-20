@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getProfile, postImage } from "../../redux/actions/actions";
 import ProfileDxTopSection from "./ProfileDxTopSection";
 import { useMediaQuery } from "react-responsive";
@@ -21,7 +21,9 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const profile = useSelector((state) => state.profile.content);
   const token = localStorage.getItem("token");
-  const isMdScreen = useMediaQuery({ minWidth: 768 });
+  const isXxlScreen = useMediaQuery({ minWidth: 1400 });
+  const navigate = useNavigate();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -50,13 +52,22 @@ const Profile = () => {
     dispatch(postImage(token, selectedFile));
   };
 
+  const handleShowLogoutModal = () => {
+    setShowLogoutModal(!showLogoutModal);
+  };
+
+  const handleConfirmLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
-    <Container fluid className={isMdScreen ? "vh-100" : ""}>
+    <Container fluid className={isXxlScreen ? "vh-100" : ""}>
       <Row>
-        <Col lg={2}>
-          <Row className="flex-column g-5 p-5">
+        <Col xs={12} xxl={3} className="p-5">
+          <Row className="flex-column">
             <Col>
-              <Card id="profileRetangle" className="">
+              <Card className="bg-secondary shadow border-light-subtle ">
                 <Card.Img
                   variant="top"
                   src={profile.avatar}
@@ -95,6 +106,13 @@ const Profile = () => {
                       </Card.Body>
                     </Card>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    className="w-100 text-light"
+                    onClick={handleShowLogoutModal}
+                  >
+                    Logout <i className="bi bi-door-open"></i>
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -150,8 +168,34 @@ const Profile = () => {
               </Row>
             </Modal.Body>
           </Modal>
+
+          <Modal show={showLogoutModal} onHide={handleShowLogoutModal} centered>
+            <Modal.Body className="d-flex flex-column p-4">
+              <span className="fs-5"> Are you sure you want to log out?</span>
+              <Row className="mt-3">
+                <Col>
+                  <Button
+                    variant="secondary"
+                    onClick={handleShowLogoutModal}
+                    className="w-100"
+                  >
+                    Cancel
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    variant="danger"
+                    onClick={handleConfirmLogout}
+                    className="text-light w-100"
+                  >
+                    Confirm log out <i className="bi bi-door-open"></i>
+                  </Button>
+                </Col>
+              </Row>
+            </Modal.Body>
+          </Modal>
         </Col>
-        <Col>
+        <Col xxl={9}>
           <ProfileDxTopSection />
         </Col>
       </Row>
