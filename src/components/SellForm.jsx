@@ -59,7 +59,8 @@ const SellForm = () => {
       formData.bathrooms !== "" &&
       formData.propertyType !== "" &&
       formData.propertyStatus !== "" &&
-      formData.description !== ""
+      formData.description !== "" &&
+      selectedFiles.length > 0
     );
   };
 
