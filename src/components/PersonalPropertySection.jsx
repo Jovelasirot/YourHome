@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProperty, getAllProperties } from "../../redux/actions/actions";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const PersonalPropertySection = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const PersonalPropertySection = () => {
   const properties = useSelector(
     (state) => state.allProperties.content.content
   );
+  const isXxlScreen = useMediaQuery({ minWidth: 1400 });
 
   const userProperties = properties.filter(
     (property) => property.user.id === currentUser
@@ -37,7 +39,11 @@ const PersonalPropertySection = () => {
   };
 
   if (userProperties.length === 0) {
-    return <div>Your real state will be shown here.</div>;
+    return (
+      <div className={isXxlScreen ? " " : "vh-100 text-center"}>
+        Your real state will be shown here.
+      </div>
+    );
   }
 
   return (

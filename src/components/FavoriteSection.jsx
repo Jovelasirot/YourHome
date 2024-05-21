@@ -7,6 +7,7 @@ import {
   getFavoriteList,
   updateFavoritesList,
 } from "../../redux/actions/actions";
+import { useMediaQuery } from "react-responsive";
 
 const FavoriteSection = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const FavoriteSection = () => {
   const properties = useSelector(
     (state) => state.allProperties.content.content
   );
+  const isXxlScreen = useMediaQuery({ minWidth: 1400 });
 
   useEffect(() => {
     if (token) {
@@ -31,7 +33,11 @@ const FavoriteSection = () => {
   };
 
   if (!favoriteList || favoriteList.length === 0) {
-    return <div>Your favorite properties will be shown here.</div>;
+    return (
+      <div className={isXxlScreen ? " " : "vh-100 text-center"}>
+        Your favorite properties will be shown here.
+      </div>
+    );
   }
 
   return (

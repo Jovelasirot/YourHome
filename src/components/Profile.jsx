@@ -64,7 +64,7 @@ const Profile = () => {
   return (
     <Container fluid className={isXxlScreen ? "vh-100" : ""}>
       <Row>
-        <Col xs={12} xxl={3} className="p-5">
+        <Col xs={12} xxl={3} className={isXxlScreen ? "p-5" : "mt-3"}>
           <Row className="flex-column">
             <Col>
               <Card className="bg-secondary shadow border-light-subtle ">
