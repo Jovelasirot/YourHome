@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import FavoriteSection from "./components/FavoriteSection";
 import ViewMoreSection from "./components/ViewMoreSection";
 import SellForm from "./components/SellForm";
+import NotFound from "./components/NotFound";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -56,6 +57,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
