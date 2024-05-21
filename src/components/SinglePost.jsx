@@ -12,6 +12,7 @@ import { useEffect } from "react";
 const SinglePost = () => {
   const loading = useSelector((state) => state.properties.loading);
   const properties = useSelector((state) => state.properties.content.content);
+  const profile = useSelector((state) => state.profile.content);
   const favoriteList = useSelector(
     (state) => state.favoriteList.content.favoritePropertyIds
   );
@@ -30,7 +31,7 @@ const SinglePost = () => {
   };
 
   if (!Array.isArray(properties) || properties.length === 0) {
-    return <div>No properties to display.</div>;
+    return <div className="vh-100">No properties to display.</div>;
   }
 
   return (
@@ -81,26 +82,35 @@ const SinglePost = () => {
                       />
                     )}
                   </div>
-                  <Row>
-                    <Card.Text className="mt-2 px-2 ">
-                      {property.description}
-                    </Card.Text>
-                    <Container>
-                      <Row className="justify-content-between mt-5">
-                        <Col>
-                          <Link to={`/homepage/details/${property.id}`}>
-                            <Button variant="primary" className="w-100 h-100 ">
-                              View more
-                            </Button>
-                          </Link>
-                        </Col>
-                        <Col>
-                          <Button variant="success" className="w-100 h-100 ">
-                            Contant the seller
+
+                  <Card.Text className="mt-2 px-2 singleDescription">
+                    {property.description}
+                  </Card.Text>
+
+                  <Row className="justify-content-between mt-5">
+                    <Col>
+                      <Link to={`/homepage/details/${property.id}`}>
+                        <Button variant="primary" className="w-100 h-100 ">
+                          View more
+                        </Button>
+                      </Link>
+                    </Col>
+                    <Col>
+                      {profile.id === property.user.id ? (
+                        <Link to="/post/modify">
+                          <Button
+                            variant="danger"
+                            className="w-100 h-100 text-light"
+                          >
+                            Modify your post
                           </Button>
-                        </Col>
-                      </Row>
-                    </Container>
+                        </Link>
+                      ) : (
+                        <Button variant="success" className="w-100 h-100 ">
+                          Contant the seller
+                        </Button>
+                      )}
+                    </Col>
                   </Row>
                 </Card.Body>
               </Card>

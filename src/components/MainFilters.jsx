@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProperties } from "../../redux/actions/actions";
 import Select from "react-select";
 
@@ -65,12 +65,14 @@ const MainFilers = () => {
     } else {
       const updatedFilters = {
         ...filters,
-        minPrice: filters.minPrice,
-        maxPrice: filters.maxPrice,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
       };
       setFilters(updatedFilters);
       setShowModal(false);
       setSafePrice(true);
+      setFilters(updatedFilters);
+      localStorage.setItem("filters", JSON.stringify(updatedFilters));
     }
   };
 
@@ -100,10 +102,6 @@ const MainFilers = () => {
     { value: "United Kingdom", label: "United Kingdom" },
     { value: "United States", label: "United States" },
   ];
-
-  const handleCountryChange = (selectedOption) => {
-    setFilters({ ...filters, country: selectedOption.value });
-  };
 
   return (
     <>

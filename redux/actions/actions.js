@@ -84,6 +84,7 @@ export const postImage = (token, image) => {
       if (response.ok) {
         const data = await response.json();
         console.log("image", data);
+        window.location.reload();
       } else {
         alert("Error while posting the image");
       }
@@ -353,6 +354,29 @@ export const deleteProperty = (token, propertyId) => {
       alert("An error occurred while deleting the property");
     } finally {
       dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const modifyCurrentProfile = (token, updatedData) => {
+  return async () => {
+    try {
+      const response = await fetch(baseEndPoint + "/me/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        alert("Profile modified correctly");
+      } else {
+        console.log("Error:", response.statusText);
+      }
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
 };

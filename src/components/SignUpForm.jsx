@@ -7,7 +7,7 @@ import {
   ProgressBar,
   Row,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -24,12 +24,12 @@ const SignUpForm = () => {
     birthdate: "",
     country: "",
     email: "",
-    username: "",
+    phone: "",
     password: "",
   });
   const isMdScreen = useMediaQuery({ minWidth: 768 });
   const emailRgx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -93,8 +93,9 @@ const SignUpForm = () => {
     } else if (!emailRgx.test(formData.email)) {
       alert("Invalid email format, please enter a valid email address.");
     } else {
-      dispatch(registerUser(formData));
-      alert("Registration successful!");
+      localStorage.setItem("email", formData.email);
+      localStorage.setItem("password", formData.password);
+      dispatch(registerUser(formData, navigate));
     }
   };
 
@@ -143,30 +144,30 @@ const SignUpForm = () => {
                       required
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="username">
-                    <Form.Group className="mb-3" controlId="birthdate">
-                      <Form.Label>Birthdate</Form.Label>
-                      <Form.Control
-                        type="date"
-                        placeholder="Birthdate"
-                        className="w-100"
-                        onChange={handleChange}
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="country">
-                      <Form.Label>Country</Form.Label>
-                      <Select
-                        options={countryOptions}
-                        onChange={handleCountryChange}
-                        className="w-100"
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Label>Username</Form.Label>
+                  <Form.Group className="mb-3" controlId="birthdate">
+                    <Form.Label>Birthdate</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Username"
+                      type="date"
+                      placeholder="Birthdate"
+                      className="w-100"
+                      onChange={handleChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="country">
+                    <Form.Label>Country</Form.Label>
+                    <Select
+                      options={countryOptions}
+                      onChange={handleCountryChange}
+                      className="w-100"
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="phone">
+                    <Form.Label>Phone number</Form.Label>
+                    <Form.Control
+                      type="phone"
+                      placeholder="Phone"
                       className="w-100"
                       onChange={handleChange}
                       required
@@ -176,7 +177,7 @@ const SignUpForm = () => {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Enter email"
+                      placeholder="Email"
                       className="w-100"
                       onChange={handleChange}
                       required

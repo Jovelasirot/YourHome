@@ -50,6 +50,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postImage(token, selectedFile));
+    setShowModal(false);
   };
 
   const handleShowLogoutModal = () => {
@@ -75,7 +76,7 @@ const Profile = () => {
                   className="mt-5 rounded-circle"
                   alt="profile picture"
                 />
-                <div className="ms-auto">
+                <div className="ms-auto me-3 ">
                   <i
                     className="bi bi-pencil-square text-end iconBtn"
                     onClick={(e) => handleModal()}
@@ -89,18 +90,18 @@ const Profile = () => {
                       {profile.country}
                     </p>
                   </Card.Title>
-                  <Link to="/register" className="w-100 mt-3 ">
+                  <Link to="/profile/modify" className="w-100 mt-3 ">
                     <Button variant="primary w-100">Modify account</Button>
                   </Link>
                   <Card.Text className="mt-2 text-light">
-                    <Card className="mt-3">
-                      <Card.Body>
+                    <Card className="my-3">
+                      <Card.Body className="bg-secondary rounded-1 shadow ">
                         <Card.Title className="border-bottom">
                           Contact info
                         </Card.Title>
                         <Card.Text>
                           <p className="border-bottom my-3">{profile.email}</p>
-                          <p>{profile.email}</p>
+                          <p>{profile.phone}</p>
                         </Card.Text>
                         <Button variant="primary">Update contact info</Button>
                       </Card.Body>
@@ -170,12 +171,12 @@ const Profile = () => {
           </Modal>
 
           <Modal show={showLogoutModal} onHide={handleShowLogoutModal} centered>
-            <Modal.Body className="d-flex flex-column p-4">
+            <Modal.Body className="d-flex flex-column p-4 bg-secondary rounded-3">
               <span className="fs-5"> Are you sure you want to log out?</span>
               <Row className="mt-3">
                 <Col>
                   <Button
-                    variant="secondary"
+                    variant="success"
                     onClick={handleShowLogoutModal}
                     className="w-100"
                   >
