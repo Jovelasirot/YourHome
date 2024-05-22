@@ -7,10 +7,15 @@ import {
   Form,
   Modal,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getProfile, postImage } from "../../redux/actions/actions";
+import {
+  getProfile,
+  modifyCurrentProfile,
+  postImage,
+} from "../../redux/actions/actions";
 import ProfileDxTopSection from "./ProfileDxTopSection";
 import { useMediaQuery } from "react-responsive";
 
@@ -19,11 +24,19 @@ const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalContactInfo, setShowModalContactInfo] = useState(false);
   const profile = useSelector((state) => state.profile.content);
+  const isLoading = useSelector((state) => state.profile.loading);
   const token = localStorage.getItem("token");
   const isXxlScreen = useMediaQuery({ minWidth: 1400 });
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: profile.name,
+    surname: profile.surname,
+    email: "" || profile.email,
+    phone: "" || profile.phone,
+  });
 
   useEffect(() => {
     if (token) {
@@ -44,13 +57,17 @@ const Profile = () => {
   };
 
   const handleModal = () => {
-    setShowModal(true);
+    setShowModal(!showModal);
+  };
+
+  const handleModalContact = () => {
+    setShowModalContactInfo(!showModalContactInfo);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postImage(token, selectedFile));
-    setShowModal(false);
+    handleModal();
   };
 
   const handleShowLogoutModal = () => {
@@ -62,6 +79,27 @@ const Profile = () => {
     navigate("/");
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+
+    const updatedFormData = {
+      ...formData,
+      email: formData.email === profile.email ? null : formData.email,
+      phone: formData.phone === profile.phone ? null : formData.phone,
+    };
+
+    dispatch(modifyCurrentProfile(token, updatedFormData));
+
+    setTimeout(() => {
+      handleModalContact();
+      window.location.reload();
+    }, 1000);
+  };
+
   return (
     <Container fluid className={isXxlScreen ? "vh-100" : ""}>
       <Row>
@@ -69,13 +107,29 @@ const Profile = () => {
           <Row className="flex-column">
             <Col>
               <Card className="bg-secondary shadow border-light-subtle ">
-                <Card.Img
-                  variant="top"
-                  src={profile.avatar}
-                  style={{ width: "200px", height: "200px", margin: "auto" }}
-                  className="mt-5 rounded-circle"
-                  alt="profile picture"
-                />
+                {isLoading ? (
+                  <div className="d-flex justify-content-center mt-5">
+                    <Spinner
+                      animation="border"
+                      role="status"
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        margin: "auto",
+                      }}
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <Card.Img
+                    variant="top"
+                    src={profile.avatar}
+                    style={{ width: "200px", height: "200px", margin: "auto" }}
+                    className="mt-5 rounded-circle border border-primary"
+                    alt="profile picture"
+                  />
+                )}
                 <div className="ms-auto me-3 ">
                   <i
                     className="bi bi-pencil-square text-end iconBtn"
@@ -103,7 +157,12 @@ const Profile = () => {
                           <p className="border-bottom my-3">{profile.email}</p>
                           <p>{profile.phone}</p>
                         </Card.Text>
-                        <Button variant="primary">Update contact info</Button>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => handleModalContact()}
+                        >
+                          Update contact info
+                        </Button>
                       </Card.Body>
                     </Card>
                   </Card.Text>
@@ -119,7 +178,7 @@ const Profile = () => {
             </Col>
           </Row>
 
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal show={showModal} onHide={() => handleModal()}>
             <Modal.Header closeButton className="bg-secondary ">
               <Modal.Title>Change profile image</Modal.Title>
             </Modal.Header>
@@ -151,7 +210,7 @@ const Profile = () => {
                         height: "200px",
                         margin: "auto",
                       }}
-                      className="rounded-circle"
+                      className="rounded-circle border border-primary"
                       alt="profile picture"
                     />
                   </Col>
@@ -164,6 +223,53 @@ const Profile = () => {
                     disabled={!previewImg}
                   >
                     Save new image
+                  </Button>
+                </Col>
+              </Row>
+            </Modal.Body>
+          </Modal>
+
+          <Modal
+            show={showModalContactInfo}
+            onHide={() => handleModalContact()}
+          >
+            <Modal.Header closeButton className="bg-secondary ">
+              <Modal.Title>Update Contact info</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="bg-secondary rounded-bottom-2">
+              <Row className="flex-column align-items-center">
+                <Col>
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Email"
+                      className="w-100"
+                      onChange={handleChange}
+                      value={formData.email}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="phone">
+                    <Form.Label>Phone:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Phone"
+                      className="w-100"
+                      onChange={handleChange}
+                      value={formData.phone}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col className="mt-4">
+                  <Button
+                    variant="primary"
+                    className="w-100"
+                    onClick={handleSubmitForm}
+                  >
+                    Update
                   </Button>
                 </Col>
               </Row>

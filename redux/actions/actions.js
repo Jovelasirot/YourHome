@@ -74,6 +74,7 @@ export const postImage = (token, image) => {
   formData.append("image", image);
   return async (dispatch) => {
     try {
+      dispatch({ type: TURN_ON_SPINNER });
       const response = await fetch(baseEndPoint + "/users/me/avatar/upload", {
         method: "POST",
         headers: {
@@ -310,6 +311,7 @@ export const postImageProperty = (token, propertyId, images) => {
   });
   return async (dispatch) => {
     try {
+      dispatch({ type: TURN_ON_SPINNER });
       const response = await fetch(
         baseEndPoint + "/properties/add/" + propertyId + "/images",
         {
@@ -361,7 +363,7 @@ export const deleteProperty = (token, propertyId) => {
 export const modifyCurrentProfile = (token, updatedData) => {
   return async () => {
     try {
-      const response = await fetch(baseEndPoint + "/me/update", {
+      const response = await fetch(baseEndPoint + "/users/me/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -373,7 +375,9 @@ export const modifyCurrentProfile = (token, updatedData) => {
         const data = await response.json();
         alert("Profile modified correctly");
       } else {
-        console.log("Error:", response.statusText);
+        alert(
+          "Unable to modify the profile, try using another email or phone number"
+        );
       }
     } catch (error) {
       console.log("Error:", error);

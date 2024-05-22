@@ -11,7 +11,6 @@ const NotFound = () => {
             src="https://giphy.com/embed/UoeaPqYrimha6rdTFV"
             width="580"
             height="370"
-            allowFullScreen
           ></iframe>
           <Col>
             <Link to={"/"}>
