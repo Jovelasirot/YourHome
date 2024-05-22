@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Carousel,
+  Col,
+  Container,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProfile, getSingleProperty } from "../../redux/actions/actions";
@@ -12,6 +20,7 @@ const ViewMoreSection = () => {
   const { propertyId } = useParams();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
   const currentUser = useSelector((state) => state.profile.content);
 
   useEffect(() => {
@@ -22,7 +31,13 @@ const ViewMoreSection = () => {
   }, [dispatch]);
 
   const property = useSelector((state) => state.singleProperty.content);
+
   const isMdScreen = useMediaQuery({ minWidth: 768 });
+
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <Container className={isMdScreen ? "vh-100" : ""}>
       <Row className="align-items-center">
@@ -119,7 +134,11 @@ const ViewMoreSection = () => {
                   </Button>
                 </Link>
               ) : (
-                <Button variant="success" className="w-100 shadow">
+                <Button
+                  variant="success"
+                  className="w-100 shadow"
+                  onClick={handleShowModal}
+                >
                   Contant the seller
                 </Button>
               )}
@@ -129,6 +148,50 @@ const ViewMoreSection = () => {
           )}
         </Col>
       </Row>
+      <Modal show={showModal} onHide={handleShowModal} centered>
+        <Modal.Body className="d-flex flex-column p-4 bg-secondary rounded-3">
+          <div className="d-flex flex-column">
+            <i
+              className="bi bi-arrow-left fs-4  iconBtn"
+              onClick={handleShowModal}
+            ></i>
+
+            <Card.Img
+              variant="top"
+              src={property.user.avatar}
+              style={{
+                width: "200px",
+                height: "200px",
+                margin: "auto",
+              }}
+              className="mt-2 rounded-circle border border-primary"
+              alt="profile picture"
+            />
+            <span className="fs-5 ms-2 text-center">
+              {property.user.name} {property.user.surname}
+            </span>
+          </div>
+          <Row className="mt-3">
+            <Col>
+              <Button variant="primary" className="w-100 h-100 ">
+                <a
+                  href={`mailto:${property.user.email}`}
+                  className="text-light text-decoration-none fw-light "
+                >
+                  Right an email
+                  <i className="bi bi-envelope ms-1 "></i>
+                </a>
+              </Button>
+            </Col>
+            <Col>
+              <Button variant="primary" className="text-light w-100 h-100">
+                Start a conversation
+                <i className="bi bi-chat-left-dots ms-1 "></i>
+              </Button>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };
