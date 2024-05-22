@@ -56,6 +56,8 @@ export const loginUser = (payload) => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
+        localStorage.setItem("password", payload.password);
+        localStorage.setItem("email", payload.email);
         dispatch({ type: LOGIN_USER, payload: data });
         dispatch(getProfile(data.token));
       } else {
@@ -352,7 +354,6 @@ export const deleteProperty = (token, propertyId) => {
         alert("Error while deleting the property");
       }
     } catch (error) {
-      console.error("Error deleting property:", error);
       alert("An error occurred while deleting the property");
     } finally {
       dispatch({ type: TURN_OFF_SPINNER });
@@ -381,6 +382,35 @@ export const modifyCurrentProfile = (token, updatedData) => {
       }
     } catch (error) {
       console.log("Error:", error);
+    }
+  };
+};
+
+export const deleteCurrentUser = (token) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(baseEndPoint + "/users/me/delete", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        alert("Profile deleted successfully");
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+        localStorage.removeItem("token");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        alert("Error while deleting the profile");
+      }
+    } catch (error) {
+      alert("An error occurred while deleting the profile");
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
     }
   };
 };

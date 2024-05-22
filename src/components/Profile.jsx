@@ -76,6 +76,8 @@ const Profile = () => {
 
   const handleConfirmLogout = () => {
     localStorage.removeItem("token");
+    localStorage.setItem("email", profile.email);
+    localStorage.removeItem("password");
     navigate("/");
   };
 

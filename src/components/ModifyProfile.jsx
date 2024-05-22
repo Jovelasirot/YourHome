@@ -5,12 +5,17 @@ import {
   Col,
   Container,
   Form,
+  InputGroup,
   Modal,
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { modifyCurrentProfile, postImage } from "../../redux/actions/actions";
+import {
+  deleteCurrentUser,
+  modifyCurrentProfile,
+  postImage,
+} from "../../redux/actions/actions";
 import { useMediaQuery } from "react-responsive";
 
 const ModifyProfile = () => {
@@ -21,6 +26,7 @@ const ModifyProfile = () => {
   const isMdScreen = useMediaQuery({ minWidth: 768 });
   const [previewImg, setPreviewImg] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "" || profile.name,
@@ -29,12 +35,22 @@ const ModifyProfile = () => {
     phone: "" || profile.phone,
   });
 
+  const password = localStorage.getItem("password");
+
+  const [formDataDelete, setFormDataDelete] = useState({
+    password: "",
+  });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const handleModalDelete = () => {
+    setShowModalDelete(!showModalDelete);
   };
 
   const handleFileChange = (event) => {
@@ -70,6 +86,26 @@ const ModifyProfile = () => {
     dispatch(postImage(token, selectedFile));
     handleModal();
     navigate("/profile");
+  };
+
+  const handleSubmitDelete = (e) => {
+    e.preventDefault();
+    if (formDataDelete.password !== password) {
+      alert("Incorrect password");
+      setFormDataDelete({
+        ...formDataDelete,
+        password: "",
+      });
+    } else {
+      dispatch(deleteCurrentUser(token));
+      handleModalDelete();
+      navigate("/");
+    }
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -179,6 +215,16 @@ const ModifyProfile = () => {
                     Save changes
                   </Button>
                 </Row>
+                <Row className="justify-content-center mt-4">
+                  <Button
+                    variant="secondary"
+                    type="submit"
+                    className="text-danger w-50 border-danger"
+                    onClick={handleModalDelete}
+                  >
+                    Delete the profile
+                  </Button>
+                </Row>
               </Container>
             </Card.Body>
           </Card>
@@ -228,6 +274,74 @@ const ModifyProfile = () => {
                   disabled={!previewImg}
                 >
                   Save new image
+                </Button>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+        <Modal
+          show={showModalDelete}
+          onHide={() => handleModalDelete()}
+          centered
+        >
+          <Modal.Header closeButton className="bg-secondary ">
+            <Modal.Title>Delete profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-secondary rounded-bottom-2">
+            <Row className="flex-column align-items-center">
+              <Col className="text-center">
+                <Card.Img
+                  variant="top"
+                  src={profile.avatar}
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                  }}
+                  className="mt-2 rounded-circle"
+                  alt="profile picture"
+                />
+                <p className="mt-1">
+                  {profile.name} {profile.surname}
+                </p>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>To confirm enter your password:</Form.Label>
+                    <Form.Group className="mb-3">
+                      <InputGroup>
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          className="w-50 ms-auto me-auto"
+                          onChange={(e) =>
+                            setFormDataDelete({
+                              ...formDataDelete,
+                              password: e.target.value,
+                            })
+                          }
+                          value={formDataDelete.password}
+                          required
+                        />
+                        <InputGroup.Text onClick={togglePasswordVisibility}>
+                          <i
+                            className={`bi ${
+                              showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"
+                            }`}
+                          ></i>
+                        </InputGroup.Text>
+                      </InputGroup>
+                    </Form.Group>
+                  </Form.Group>
+                </Form>
+              </Col>
+
+              <Col className="text-center">
+                <Button
+                  variant="danger"
+                  className="w-50 text-light"
+                  onClick={handleSubmitDelete}
+                  disabled={formDataDelete.password == ""}
+                >
+                  Delete Profile
                 </Button>
               </Col>
             </Row>

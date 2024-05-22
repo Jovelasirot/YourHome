@@ -45,10 +45,9 @@ const SignIn = () => {
     setShowPassword(!showPassword);
   };
 
-  const isFormIncomplete =
-    Object.values(formData).some((value) => value === "") ||
-    !emailStored ||
-    !passwordStored;
+  const isFormIncomplete = Object.values(formData).some(
+    (value) => value === ""
+  );
 
   return (
     <Container fluid className="signImgBg">
