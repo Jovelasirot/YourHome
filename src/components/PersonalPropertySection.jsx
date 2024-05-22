@@ -73,7 +73,9 @@ const PersonalPropertySection = () => {
                 <Col className="d-flex flex-column justify-content-end">
                   <Row className="flex-column">
                     <Col className="fw-bold">{property.address}</Col>
-                    <Col>{property.country}</Col>
+                    <Col>
+                      {property.city}, {property.country}
+                    </Col>
                   </Row>
                 </Col>
                 <Col className="d-flex flex-column justify-content-end text-end">

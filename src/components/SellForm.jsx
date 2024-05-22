@@ -132,17 +132,17 @@ const SellForm = () => {
               </Card.Title>
               <Card.Text>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" controlId="country">
-                    <Form.Label>Country:</Form.Label>
-                    <Select
-                      placeholder="Country..."
-                      options={countryOptions}
-                      onChange={handleCountryChange}
-                      className="w-100"
-                      required
-                    />
-                  </Form.Group>
                   <Form.Group className="mb-3" controlId="city">
+                    <Form.Group className="mb-3" controlId="country">
+                      <Form.Label>Country:</Form.Label>
+                      <Select
+                        placeholder="Country..."
+                        options={countryOptions}
+                        onChange={handleCountryChange}
+                        className="w-100"
+                        required
+                      />
+                    </Form.Group>
                     <Form.Label>City:</Form.Label>
                     <Form.Control
                       type="text"
@@ -164,7 +164,7 @@ const SellForm = () => {
                       required
                     />
                   </Form.Group>
-                  <Row xs={1} md={2}>
+                  <Row xs={1} md={3}>
                     <Col>
                       <Form.Group className="mb-3" controlId="bedrooms">
                         <Form.Label>Bedrooms:</Form.Label>
@@ -187,6 +187,19 @@ const SellForm = () => {
                           className="w-100"
                           onChange={handleChange}
                           value={formData.bathrooms}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="area">
+                        <Form.Label>Area:</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="m²"
+                          className="w-100"
+                          onChange={handleChange}
+                          value={formData.area}
                           required
                         />
                       </Form.Group>

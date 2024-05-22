@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteProperty,
   getSingleProperty,
   modifyCurrentProperty,
 } from "../../redux/actions/actions";
@@ -24,6 +25,8 @@ const ModifyProperty = () => {
   const { propertyId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState(null);
 
   const property = useSelector((state) => state.singleProperty.content);
   const isLoading = useSelector((state) => state.singleProperty.loading);
@@ -109,6 +112,23 @@ const ModifyProperty = () => {
 
   const maxChars = 255;
   let charsRemaining = maxChars - formData.description.length;
+
+  const handleModalConfirmation = (propertyId) => {
+    setShowConfirmation(true);
+    setPropertyToDelete(propertyId);
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+    setPropertyToDelete(null);
+  };
+
+  const handleDeleteConfirm = () => {
+    dispatch(deleteProperty(token, propertyToDelete));
+    setShowConfirmation(false);
+    setPropertyToDelete(null);
+    navigate("/homepage");
+  };
 
   return (
     <Container>
@@ -293,9 +313,44 @@ const ModifyProperty = () => {
               >
                 Update property
               </Button>
+              <Button
+                type="submit"
+                className="w-100 mt-3 text-danger bg-secondary border-danger"
+                onClick={() => handleModalConfirmation(property.id)}
+              >
+                Delete property
+              </Button>
             </Card.Body>
           </Card>
         </Col>
+        <Modal show={showConfirmation} onHide={handleCancelDelete}>
+          <Modal.Header closeButton className="bg-secondary">
+            <Modal.Title>Confirm delete</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-secondary d-flex flex-column align-items-center">
+            <span>Are you sure you want to delete this real state?</span>
+
+            <img
+              src={property.images[0]}
+              alt="property picture"
+              width={"400 px"}
+              height={"200 px"}
+            />
+          </Modal.Body>
+          <Modal.Footer className="bg-secondary">
+            <Button variant="success" onClick={handleCancelDelete}>
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              className="text-light d-flex  align-items-center"
+              onClick={handleDeleteConfirm}
+            >
+              Confrim
+              <i className="bi bi-trash ms-1" />
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Row>
     </Container>
   );

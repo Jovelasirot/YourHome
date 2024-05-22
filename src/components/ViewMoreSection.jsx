@@ -88,7 +88,6 @@ const ViewMoreSection = () => {
               </Card.Text>
               <Card.Text className="text-end">
                 <p className="fw-bold mb-0">Owner:</p>
-                {/* <p>{ownerData.name}</p> */}
                 <p>
                   {property.user.name} {property.user.surname}
                 </p>
