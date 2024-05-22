@@ -13,6 +13,7 @@ import SellForm from "./components/SellForm";
 import NotFound from "./components/NotFound";
 import ModifyProfile from "./components/ModifyProfile";
 import ModifyProperty from "./components/ModifyProperty";
+import Footer from "./components/Footer";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -77,6 +78,7 @@ function App() {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );
