@@ -14,6 +14,7 @@ import NotFound from "./components/NotFound";
 import ModifyProfile from "./components/ModifyProfile";
 import ModifyProperty from "./components/ModifyProperty";
 import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -28,6 +29,7 @@ function App() {
           />
           <Route path="/register" element={<SignUpForm />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route
             path="/homepage"
             element={

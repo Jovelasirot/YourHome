@@ -23,7 +23,7 @@ const MyNavBar = () => {
   }, [dispatch, token]);
 
   return (
-    <Navbar expand="lg" className="bg-secondary border-bottom py-0 ">
+    <Navbar expand="lg" className="bg-secondary border-bottom py-0 fixed-top  ">
       <Container fluid className="d-flex align-items-center px-5 ">
         <Link
           to={localStorage.getItem("token") ? "/homepage" : "/"}
@@ -53,12 +53,10 @@ const MyNavBar = () => {
                   Home
                 </span>
               </Link>
-              <Link to="/notfound" className="text-decoration-none">
+              <Link to="/about" className="text-decoration-none">
                 <span
                   className={`text-decoration-none me-lg-4 ${
-                    location.pathname === "/notfound"
-                      ? "text-dark"
-                      : "text-muted"
+                    location.pathname === "/about" ? "text-dark" : "text-muted"
                   }`}
                 >
                   About us
