@@ -1,38 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
+  Carousel,
   Col,
   Container,
   Form,
   Modal,
   Row,
+  Spinner,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { sellProperty } from "../../redux/actions/actions";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getSingleProperty,
+  modifyCurrentProperty,
+} from "../../redux/actions/actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Select from "react-select";
 
-const SellForm = () => {
+const ModifyProperty = () => {
   const token = localStorage.getItem("token");
+  const { propertyId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const property = useSelector((state) => state.singleProperty.content);
+  const isLoading = useSelector((state) => state.singleProperty.loading);
+
   const [formData, setFormData] = useState({
-    country: "",
-    city: "",
-    address: "",
-    price: "",
-    area: "",
-    bedrooms: "",
-    bathrooms: "",
-    propertyType: "",
-    propertyStatus: "",
-    description: "",
+    country: "" || property.country,
+    city: "" || property.city,
+    address: "" || property.address,
+    price: "" || property.price,
+    area: "" || property.area,
+    bedrooms: "" || property.bedrooms,
+    bathrooms: "" || property.bathrooms,
+    propertyType: "" || property.propertyType,
+    propertyStatus: "" || property.propertyStatus,
+    description: property?.description || "",
   });
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [previewImgs, setPreviewImgs] = useState([]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -43,8 +50,8 @@ const SellForm = () => {
     if (formData.price <= 0) {
       alert("Price can be less than zero");
     } else {
-      dispatch(sellProperty(token, formData, selectedFiles));
-      navigate("/profile");
+      dispatch(modifyCurrentProperty(token, formData, propertyId));
+      navigate("/homepage");
     }
   };
 
@@ -59,8 +66,7 @@ const SellForm = () => {
       formData.bathrooms !== "" &&
       formData.propertyType !== "" &&
       formData.propertyStatus !== "" &&
-      formData.description !== "" &&
-      selectedFiles.length > 0
+      formData.description !== ""
     );
   };
 
@@ -88,38 +94,33 @@ const SellForm = () => {
   ];
 
   const handleCountryChange = (selectedOption) => {
-    setFormData({ ...formData, country: selectedOption.value });
+    setFormData({
+      ...formData,
+      country: selectedOption.value || initialCountryOption,
+    });
   };
 
-  const handleFileChange = (event) => {
-    const files = event.target.files;
-    const newSelectedFiles = [...selectedFiles];
-    const newPreviews = [...previewImgs];
+  const initialCountryIndex = countryOptions.findIndex(
+    (option) => option.value === property.country
+  );
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      newSelectedFiles.push(file);
-      newPreviews.push(URL.createObjectURL(file));
-    }
-    setSelectedFiles(newSelectedFiles);
-    setPreviewImgs(newPreviews);
-  };
-
-  const handleRemoveImage = (index) => {
-    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
-    const updatedPreviews = previewImgs.filter((_, i) => i !== index);
-    setSelectedFiles(updatedFiles);
-    setPreviewImgs(updatedPreviews);
-  };
+  const initialCountryOption =
+    countryOptions[initialCountryIndex > -1 ? initialCountryIndex : 0];
 
   const maxChars = 255;
-  const charsRemaining = maxChars - formData.description.length;
+  let charsRemaining = maxChars - formData.description.length;
 
   return (
     <Container>
-      <Row className={isMdScreen ? "vh-100 align-items-center" : "vh-100 mt-5"}>
+      <Row className={isMdScreen ? "align-items-center" : "mt-5"}>
         <Col>
-          <Card className="py-5 bg-secondary shadow border-0   px-5">
+          <Card
+            className={
+              isMdScreen
+                ? " py-5 bg-secondary shadow border-0 px-5"
+                : "py-2 bg-secondary shadow border-0 px-2"
+            }
+          >
             <Col>
               <Link to="/homepage" className="text-decoration-none ">
                 <i className="bi bi bi-arrow-left iconBtn fs-3"></i>
@@ -127,43 +128,82 @@ const SellForm = () => {
             </Col>
             <Card.Body>
               <Card.Title className="fs-3 fw-light border-bottom">
-                <span className="fw-bold text-primary">Sell Your home </span>
-                with us
+                <span className="fw-bold text-primary">Modfiy property </span>
               </Card.Title>
+
               <Card.Text>
+                <Carousel className="mb-2">
+                  {property.images &&
+                    property.images.map((image, index) => (
+                      <Carousel.Item key={index}>
+                        <img
+                          className="w-100 "
+                          src={image}
+                          alt="Property image"
+                          style={{ maxHeight: "500px", objectFit: "cover" }}
+                        />
+                      </Carousel.Item>
+                    ))}
+                </Carousel>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" controlId="country">
-                    <Form.Label>Country:</Form.Label>
-                    <Select
-                      placeholder="Country..."
-                      options={countryOptions}
-                      onChange={handleCountryChange}
-                      className="w-100"
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="city">
-                    <Form.Label>City:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="City"
-                      className="w-100"
-                      onChange={handleChange}
-                      value={formData.city}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="address">
-                    <Form.Label>Address:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Address"
-                      className="w-100"
-                      onChange={handleChange}
-                      value={formData.address}
-                      required
-                    />
-                  </Form.Group>
+                  <Row>
+                    <Col xs={12} md={8}>
+                      <Form.Group className="mb-3" controlId="address">
+                        <Form.Label>Address:</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Address"
+                          className="w-100"
+                          onChange={handleChange}
+                          value={formData.address}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="price">
+                        <Form.Label>Price:</Form.Label>
+                        <Form.Control
+                          placeholder="Price"
+                          className="w-100"
+                          onChange={handleChange}
+                          value={formData.price}
+                          required
+                          type="number"
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Row xs={1} md={2}>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="country">
+                        <Form.Label>Country:</Form.Label>
+                        <Select
+                          placeholder="Country..."
+                          defaultValue={initialCountryOption}
+                          options={countryOptions}
+                          onChange={handleCountryChange}
+                          className="w-100"
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="city">
+                        <Form.Label>City:</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="City"
+                          className="w-100"
+                          onChange={handleChange}
+                          value={formData.city}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Row xs={1} md={2}>
                     <Col>
                       <Form.Group className="mb-3" controlId="bedrooms">
@@ -228,18 +268,6 @@ const SellForm = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Form.Group className="mb-3" controlId="price">
-                    <Form.Label>Price:</Form.Label>
-                    <Form.Control
-                      placeholder="Price"
-                      className="w-100"
-                      onChange={handleChange}
-                      value={formData.price}
-                      required
-                      type="number"
-                    />
-                  </Form.Group>
-                  <Button onClick={() => setShowModal(true)}>Add images</Button>
                   <Form.Group className="mb-3" controlId="description">
                     <Form.Label>Description:</Form.Label>
                     <Form.Control
@@ -263,80 +291,14 @@ const SellForm = () => {
                 onClick={handleSubmit}
                 disabled={!isFormComplete()}
               >
-                Post property
+                Update property
               </Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
-        <Modal.Header closeButton className="bg-secondary">
-          <Modal.Title>Add Images</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="bg-secondary">
-          <Form.Group controlId="image">
-            <div className="d-flex align-items-center justify-content-center">
-              <div>
-                <span>
-                  {previewImgs.length > 0 ? "Add images" : "Select images"}
-                </span>
-              </div>
-              <label htmlFor="upload-photo">
-                <i className="bi bi-image fs-5 text-muted iconBtn"></i>
-              </label>
-            </div>
-            <input
-              type="file"
-              id="upload-photo"
-              onChange={handleFileChange}
-              className="d-none"
-              multiple
-            />
-            <div className="d-flex justify-content-center flex-wrap">
-              {previewImgs.map((preview, index) => (
-                <div key={index} className="m-2 sell-img ">
-                  <img
-                    src={preview}
-                    alt={`Preview image ${index + 1}`}
-                    style={{ maxWidth: "350px", maxHeight: "250px" }}
-                    className={`img-fluid border  ${
-                      index === 0 ? "border-primary-subtle" : ""
-                    }`}
-                  />
-                  <i
-                    className="bi bi-trash heartIcon-fav-section btn-sell-del text-danger fs-5 border border-light bg-opacity-50  bg-light"
-                    onClick={() => handleRemoveImage(index)}
-                  ></i>
-                  {index === 0 ? (
-                    <p className="text-center mb-0 ">Thumbnail picture</p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ))}
-            </div>
-            {previewImgs.length > 0 && (
-              <div className="d-flex justify-content-center ">
-                <label htmlFor="upload-photo">
-                  <i
-                    className="bi bi-plus fs-4 heartIcon border text-dark"
-                    onChange={handleFileChange}
-                  ></i>
-                </label>
-              </div>
-            )}
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="bg-secondary">
-          <Button variant="success" onClick={() => setShowModal(false)}>
-            {previewImgs.length > 1
-              ? "Save select images"
-              : "Save selecte image"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 };
 
-export default SellForm;
+export default ModifyProperty;

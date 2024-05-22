@@ -13,6 +13,7 @@ const SinglePost = () => {
   const loading = useSelector((state) => state.properties.loading);
   const properties = useSelector((state) => state.properties.content.content);
   const profile = useSelector((state) => state.profile.content);
+  const navigate = useNavigate();
   const favoriteList = useSelector(
     (state) => state.favoriteList.content.favoritePropertyIds
   );
@@ -34,11 +35,19 @@ const SinglePost = () => {
     return <div className="vh-100">No properties to display.</div>;
   }
 
+  const modifyBtn = (e, propertyId) => {
+    e.preventDefault();
+    dispatch(getSingleProperty(token, propertyId));
+    setTimeout(() => {
+      navigate(`/property/modify/${propertyId}`);
+    }, 50);
+  };
+
   return (
     <Container className={properties.length <= 2 ? "vh-100" : ""}>
       <Row xs={1} md={2} className="justify-content-center g-5">
         {loading ? (
-          <Col className="text-center">
+          <Col className="text-center vh-100">
             <Spinner animation="grow" variant="primary" />
           </Col>
         ) : (
@@ -57,12 +66,19 @@ const SinglePost = () => {
                     <Col className="d-flex ">
                       <Card.Title>
                         {property.address}
-                        <p className="fw-light fs-6">{property.country}</p>
+                        <p className="fw-light fs-6">
+                          {property.city}, {property.country}
+                        </p>
                       </Card.Title>
                     </Col>
                     <Col>
                       <Card.Title className="text-end">
-                        € {Math.floor(parseInt(property.price) / 1000)} k
+                        €{" "}
+                        {Math.abs(parseInt(property.price)) >= 1000000
+                          ? `${(
+                              Math.floor(parseInt(property.price) / 100000) / 10
+                            ).toFixed(1)}m`
+                          : `${Math.floor(parseInt(property.price) / 1000)}k`}
                         <p className="fw-light fs-6">
                           Area: {property.area} m²
                         </p>
@@ -97,14 +113,13 @@ const SinglePost = () => {
                     </Col>
                     <Col>
                       {profile.id === property.user.id ? (
-                        <Link to="/post/modify">
-                          <Button
-                            variant="danger"
-                            className="w-100 h-100 text-light"
-                          >
-                            Modify your post
-                          </Button>
-                        </Link>
+                        <Button
+                          variant="danger"
+                          className="w-100 h-100 text-light"
+                          onClick={(e) => modifyBtn(e, property.id)}
+                        >
+                          Modify your post
+                        </Button>
                       ) : (
                         <Button variant="success" className="w-100 h-100 ">
                           Contant the seller

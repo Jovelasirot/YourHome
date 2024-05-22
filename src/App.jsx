@@ -12,6 +12,7 @@ import ViewMoreSection from "./components/ViewMoreSection";
 import SellForm from "./components/SellForm";
 import NotFound from "./components/NotFound";
 import ModifyProfile from "./components/ModifyProfile";
+import ModifyProperty from "./components/ModifyProperty";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -63,6 +64,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ModifyProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/property/modify/:propertyId"
+            element={
+              <ProtectedRoute>
+                <ModifyProperty />
               </ProtectedRoute>
             }
           />

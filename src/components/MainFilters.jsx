@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProperties } from "../../redux/actions/actions";
 import Select from "react-select";
 
-const MainFilers = () => {
+const MainFilters = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
@@ -240,4 +240,4 @@ const MainFilers = () => {
   );
 };
 
-export default MainFilers;
+export default MainFilters;

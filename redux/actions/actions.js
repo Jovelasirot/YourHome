@@ -414,3 +414,26 @@ export const deleteCurrentUser = (token) => {
     }
   };
 };
+
+export const modifyCurrentProperty = (token, updatedData, propertyId) => {
+  return async () => {
+    try {
+      const response = await fetch(baseEndPoint + "/properties/" + propertyId, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        alert("Property modified correctly");
+      } else {
+        alert("Unable to modify the property, try again later");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+};

@@ -37,7 +37,9 @@ const ViewMoreSection = () => {
                   <Card.Title className="fw-bold">
                     {property.address}
                   </Card.Title>
-                  <span>{property.country}</span>
+                  <span>
+                    {property.city}, {property.country}
+                  </span>
                 </Col>
                 <Col className="text-end">
                   <Card.Title className="mb-0">{property.price} €</Card.Title>
@@ -112,9 +114,11 @@ const ViewMoreSection = () => {
                 </Col>
               </Row>
               {currentUser.id == property.user.id ? (
-                <Button variant="danger" className="w-100 shadow text-light">
-                  Modify your post
-                </Button>
+                <Link to={`/property/modify/${propertyId}`}>
+                  <Button variant="danger" className="w-100 shadow text-light">
+                    Modify your post
+                  </Button>
+                </Link>
               ) : (
                 <Button variant="success" className="w-100 shadow">
                   Contant the seller
