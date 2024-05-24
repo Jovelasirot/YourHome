@@ -23,7 +23,15 @@ const ListAppointment = () => {
 
   return (
     <Container fluid>
-      <Row className="flex-column gy-4 mt-2">
+      <Row className="fw-bold mb-1 mt-2">
+        <Col>Date</Col>
+        <Col>Time</Col>
+        <Col>Address</Col>
+        <Col>Status</Col>
+        <Col>Owner</Col>
+        <Col xs={1}></Col>
+      </Row>
+      <Row className="flex-column gy-4">
         {loading ? (
           <Col>
             <Placeholder animation="glow">
@@ -36,9 +44,46 @@ const ListAppointment = () => {
           reservationList &&
           reservationList.map((reservation) => (
             <Col key={reservation.id} className="shadow rounded-3 p-3">
-              <p>Date: {reservation.reservationDate}</p>
-              <p>Time: {reservation.time}</p>
-              <Row></Row>
+              <Row>
+                <Col className="d-flex align-items-center">
+                  {reservation.reservationDate}
+                </Col>
+                <Col className="d-flex align-items-center">
+                  {reservation.time}
+                </Col>
+                <Col className="d-flex align-items-center">
+                  {reservation.property.address}
+                </Col>
+                <Col className="d-flex align-items-center">
+                  <span
+                    className={`p-3 rounded-5 text-light shadow ${
+                      reservation.reservationStatus === "PENDING"
+                        ? "bg-warning"
+                        : reservation.reservationStatus === "ACCEPTED"
+                        ? "bg-success"
+                        : reservation.reservationStatus === "NOT_ACCEPTED"
+                        ? "bg-danger"
+                        : reservation.reservationStatus === "CANCELED"
+                        ? "bg-info"
+                        : ""
+                    }`}
+                  >
+                    {reservation.reservationStatus}
+                  </span>
+                </Col>
+                <Col className="d-flex align-items-center">
+                  <img
+                    src={reservation.property.user.avatar}
+                    alt="owner avatar"
+                    width="50"
+                    height="50"
+                    className="rounded-circle"
+                  />
+                </Col>
+                <Col className="d-flex align-items-center" xs={1}>
+                  <i className="bi bi-pencil-square text-end iconBtn fs-5 "></i>
+                </Col>
+              </Row>
             </Col>
           ))
         )}

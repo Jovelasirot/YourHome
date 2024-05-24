@@ -81,7 +81,7 @@ const MyNavBar = () => {
                   <>
                     <img
                       src={profile.avatar}
-                      alt="test"
+                      alt="profile avatar"
                       width="35"
                       height="35"
                       className={`rounded-circle border border-primary ${
