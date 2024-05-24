@@ -38,6 +38,10 @@ const ViewMoreSection = () => {
     setShowModal(!showModal);
   };
 
+  if (!property || Object.keys(property).length === 0) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Container className={isMdScreen ? "vh-100" : ""}>
       <Row className="align-items-center">
@@ -147,51 +151,68 @@ const ViewMoreSection = () => {
             <p>No property data available.</p>
           )}
         </Col>
-      </Row>
-      <Modal show={showModal} onHide={handleShowModal} centered>
-        <Modal.Body className="d-flex flex-column p-4 bg-secondary rounded-3">
-          <div className="d-flex flex-column">
-            <i
-              className="bi bi-arrow-left fs-4  iconBtn"
-              onClick={handleShowModal}
-            ></i>
+        <Modal show={showModal} onHide={handleShowModal} centered>
+          <Modal.Body className="d-flex flex-column p-4 bg-secondary rounded-3">
+            <div className="d-flex flex-column">
+              <i
+                className="bi bi-arrow-left fs-4  iconBtn"
+                onClick={handleShowModal}
+              ></i>
 
-            <Card.Img
-              variant="top"
-              src={property.user.avatar}
-              style={{
-                width: "200px",
-                height: "200px",
-                margin: "auto",
-              }}
-              className="mt-2 rounded-circle border border-primary"
-              alt="profile picture"
-            />
-            <span className="fs-5 ms-2 text-center">
-              {property.user.name} {property.user.surname}
-            </span>
-          </div>
-          <Row className="mt-3">
-            <Col>
-              <Button variant="primary" className="w-100 h-100 ">
-                <a
-                  href={`mailto:${property.user.email}`}
-                  className="text-light text-decoration-none fw-light "
-                >
-                  Right an email
-                  <i className="bi bi-envelope ms-1 "></i>
-                </a>
-              </Button>
-            </Col>
-            <Col>
-              <Button variant="primary" className="text-light w-100 h-100">
-                Start a conversation
-                <i className="bi bi-chat-left-dots ms-1 "></i>
-              </Button>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
+              <Card.Img
+                variant="top"
+                src={property.user.avatar}
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  margin: "auto",
+                }}
+                className="mt-2 rounded-circle border border-primary"
+                alt="profile picture"
+              />
+              <span className="fs-5 ms-2 text-center">
+                <p className="mb-0 fs-6 ">Owner of property: </p>
+                {property.user.name} {property.user.surname}
+              </span>
+            </div>
+            <Row className="mt-3 gy-2 ">
+              <Col className="d-flex flex-column justify-content-center">
+                <div className="mx-auto  ">
+                  <a
+                    href={`mailto:${property.user.email}`}
+                    className="text-decoration-none fw-light m"
+                  >
+                    <i className="bi bi-envelope iconBtnContact fs-4  "></i>
+                  </a>
+                </div>
+                <small className="text-center">Write an email</small>
+              </Col>
+              <Col className="d-flex flex-column justify-content-center">
+                <div className="mx-auto  ">
+                  <Link
+                    to={`/property/reservation/${property.id}`}
+                    className="text-decoration-none"
+                  >
+                    <i className="bi bi-calendar-check iconBtnContact fs-4"></i>
+                  </Link>
+                </div>
+                <small className="text-center">Make a reservation</small>
+              </Col>
+              <Col className="d-flex flex-column justify-content-center">
+                <div className="mx-auto">
+                  <i
+                    className="bi bi-chat-left-dots iconBtnContact fs-4"
+                    disabled
+                  ></i>
+                </div>
+                <small className="text-center">
+                  Message {property.user.name}{" "}
+                </small>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+      </Row>
     </Container>
   );
 };

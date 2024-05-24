@@ -27,10 +27,6 @@ const MainFilters = () => {
         };
   });
 
-  useEffect(() => {
-    setIsPriceValid(filters.minPrice !== "" && filters.maxPrice !== "");
-  }, [filters.minPrice, filters.maxPrice]);
-
   const handleInputChange = (event, key) => {
     const { value } = event.target;
     const newFilters = {
@@ -102,6 +98,10 @@ const MainFilters = () => {
     { value: "United Kingdom", label: "United Kingdom" },
     { value: "United States", label: "United States" },
   ];
+
+  useEffect(() => {
+    setIsPriceValid(minPrice !== "" && maxPrice !== "");
+  }, [minPrice, maxPrice]);
 
   return (
     <>

@@ -15,6 +15,7 @@ import ModifyProfile from "./components/ModifyProfile";
 import ModifyProperty from "./components/ModifyProperty";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
+import ReservationSection from "./components/ReservationSection";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -75,6 +76,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ModifyProperty />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/property/reservation/:propertyId"
+            element={
+              <ProtectedRoute>
+                <ReservationSection />
               </ProtectedRoute>
             }
           />

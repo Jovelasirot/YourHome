@@ -160,7 +160,25 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMA
   &:hover {
     background-color: #eae9f1;
     border: 1px solid $secondary;
-    box-shadow: 1px 8px 15px -4px #b3b1b1;; 
+    box-shadow: 1px 8px 15px -4px #b3b1b1;
+  }
+}
+
+.iconBtnContact{
+  height: 80px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: $secondary;
+  -webkit-box-shadow: inset -7px 7px 15px 0px #cecccc; 
+  box-shadow: inset -7px 7px 15px 0px #cecccc;
+  transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.5s ease-in-out;
+  &:hover {
+    background-color: $secondary;
+    border: 1px solid $secondary;
+    box-shadow: 1px 8px 15px -4px #4b6074;
   }
 }
 

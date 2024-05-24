@@ -149,6 +149,23 @@
   box-shadow: 1px 8px 15px -4px #b3b1b1;
 }
 
+.iconBtnContact {
+  height: 80px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: #ECECEC;
+  box-shadow: inset -7px 7px 15px 0px #cecccc;
+  transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.5s ease-in-out;
+}
+.iconBtnContact:hover {
+  background-color: #ECECEC;
+  border: 1px solid #ECECEC;
+  box-shadow: 1px 8px 15px -4px #4b6074;
+}
+
 .iconBtnGlass {
   height: 40px;
   width: 40px;

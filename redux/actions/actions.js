@@ -437,3 +437,28 @@ export const modifyCurrentProperty = (token, updatedData, propertyId) => {
     }
   };
 };
+
+export const postReservation = (token, payload) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: TURN_ON_SPINNER });
+      const response = await fetch(baseEndPoint + "/reservations/create", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        alert("Reservation send correctly");
+      } else {
+        alert("Error while sendin the reservetion, try again later.");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};

@@ -16,6 +16,7 @@ import {
   updateFavoritesList,
 } from "../../redux/actions/actions";
 import { useEffect, useState } from "react";
+import ContactModal from "./ContactModal";
 
 const SinglePost = () => {
   const loading = useSelector((state) => state.properties.loading);
@@ -23,6 +24,7 @@ const SinglePost = () => {
   const profile = useSelector((state) => state.profile.content);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const favoriteList = useSelector(
     (state) => state.favoriteList.content.favoritePropertyIds
   );
@@ -52,8 +54,14 @@ const SinglePost = () => {
     }, 50);
   };
 
-  const handleShowModal = () => {
-    setShowModal(!showModal);
+  const handleShowModal = (property) => {
+    setSelectedProperty(property);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProperty(null);
   };
 
   return (
@@ -137,7 +145,7 @@ const SinglePost = () => {
                         <Button
                           variant="success"
                           className="w-100 h-100"
-                          onClick={handleShowModal}
+                          onClick={() => handleShowModal(property)}
                         >
                           Contant the seller
                         </Button>
@@ -146,57 +154,17 @@ const SinglePost = () => {
                   </Row>
                 </Card.Body>
               </Card>
-              <Modal show={showModal} onHide={handleShowModal} centered>
-                <Modal.Body className="d-flex flex-column p-4 bg-secondary rounded-3">
-                  <div className="d-flex flex-column">
-                    <i
-                      className="bi bi-arrow-left fs-4  iconBtn"
-                      onClick={handleShowModal}
-                    ></i>
-
-                    <Card.Img
-                      variant="top"
-                      src={property.user.avatar}
-                      style={{
-                        width: "200px",
-                        height: "200px",
-                        margin: "auto",
-                      }}
-                      className="mt-2 rounded-circle border border-primary"
-                      alt="profile picture"
-                    />
-                    <span className="fs-5 ms-2 text-center">
-                      {property.user.name} {property.user.surname}
-                    </span>
-                  </div>
-                  <Row className="mt-3">
-                    <Col>
-                      <Button variant="primary" className="w-100 h-100 ">
-                        <a
-                          href={`mailto:${property.user.email}`}
-                          className="text-light text-decoration-none fw-light "
-                        >
-                          Right an email
-                          <i className="bi bi-envelope ms-1 "></i>
-                        </a>
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        variant="primary"
-                        className="text-light w-100 h-100"
-                      >
-                        Start a conversation
-                        <i className="bi bi-chat-left-dots ms-1 "></i>
-                      </Button>
-                    </Col>
-                  </Row>
-                </Modal.Body>
-              </Modal>
             </Col>
           ))
         )}
       </Row>
+      {selectedProperty && (
+        <ContactModal
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+          property={selectedProperty}
+        />
+      )}
     </Container>
   );
 };

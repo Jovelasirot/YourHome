@@ -23,7 +23,12 @@ const MyNavBar = () => {
   }, [dispatch, token]);
 
   return (
-    <Navbar expand="lg" className="bg-secondary border-bottom py-0 fixed-top  ">
+    <Navbar
+      expand="lg"
+      className={`bg-secondary border-bottom py-0 ${
+        location.pathname === "/about" ? "fixed-top" : ""
+      }`}
+    >
       <Container fluid className="d-flex align-items-center px-5 ">
         <Link
           to={localStorage.getItem("token") ? "/homepage" : "/"}
