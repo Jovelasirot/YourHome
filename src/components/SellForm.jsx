@@ -119,7 +119,11 @@ const SellForm = () => {
     <Container>
       <Row className={isMdScreen ? "vh-100 align-items-center" : "vh-100 mt-5"}>
         <Col>
-          <Card className="py-5 bg-secondary shadow border-0   px-5">
+          <Card
+            className={`bg-secondary shadow border-0 ${
+              isMdScreen ? " py-5 px-5" : ""
+            }`}
+          >
             <Col>
               <Link to="/homepage" className="text-decoration-none ">
                 <i className="bi bi bi-arrow-left iconBtn fs-3"></i>

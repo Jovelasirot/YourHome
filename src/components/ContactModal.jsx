@@ -43,13 +43,13 @@ const ContactModal = ({ showModal, handleCloseModal, property }) => {
           <Col className="d-flex flex-column justify-content-center">
             <div className="mx-auto">
               <Link
-                to={`/property/reservation/${property.id}`}
+                to={`/property/appointment/${property.id}`}
                 className="text-decoration-none"
               >
                 <i className="bi bi-calendar-check iconBtnContact fs-4"></i>
               </Link>
             </div>
-            <small className="text-center">Make a reservation</small>
+            <small className="text-center"> Book an appointment</small>
           </Col>
           <Col className="d-flex flex-column justify-content-center">
             <div className="mx-auto">

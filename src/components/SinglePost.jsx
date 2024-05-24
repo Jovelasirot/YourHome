@@ -126,7 +126,7 @@ const SinglePost = () => {
 
                   <Row className="justify-content-between mt-5">
                     <Col>
-                      <Link to={`/homepage/details/${property.id}`}>
+                      <Link to={`/property/details/${property.id}`}>
                         <Button variant="primary" className="w-100 h-100 ">
                           View more
                         </Button>

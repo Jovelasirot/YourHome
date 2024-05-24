@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProfile, getSingleProperty } from "../../redux/actions/actions";
 import blueprint from "../assets/Img/blueprint.png";
 import bedroom from "../assets/Img/bedroom.png";
@@ -45,7 +45,7 @@ const ViewMoreSection = () => {
   return (
     <Container className={isMdScreen ? "vh-100" : ""}>
       <Row className="align-items-center">
-        <Col className="mt-4 shadow rounded-2  ">
+        <Col className="mt-4 shadow rounded-2">
           <Link to="/homepage" className="text-decoration-none ">
             <i className="bi bi-arrow-left fs-4 mt-2 iconBtn"></i>
           </Link>
@@ -125,7 +125,7 @@ const ViewMoreSection = () => {
                   </div>
                 </Col>
                 <Col className="d-flex justify-content-center  align-items-center ">
-                  <span className="me-3 fs-4 ">{property.area} m²</span>
+                  <span className="me-3 fs-4 ">{property.area}</span>
                   <div>
                     <img src={blueprint} alt="area icon" />
                   </div>
@@ -190,13 +190,13 @@ const ViewMoreSection = () => {
               <Col className="d-flex flex-column justify-content-center">
                 <div className="mx-auto  ">
                   <Link
-                    to={`/property/reservation/${property.id}`}
+                    to={`/property/appointment/${property.id}`}
                     className="text-decoration-none"
                   >
                     <i className="bi bi-calendar-check iconBtnContact fs-4"></i>
                   </Link>
                 </div>
-                <small className="text-center">Make a reservation</small>
+                <small className="text-center"> Book an appointment</small>
               </Col>
               <Col className="d-flex flex-column justify-content-center">
                 <div className="mx-auto">

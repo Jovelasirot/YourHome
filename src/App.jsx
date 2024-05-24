@@ -15,7 +15,7 @@ import ModifyProfile from "./components/ModifyProfile";
 import ModifyProperty from "./components/ModifyProperty";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
-import ReservationSection from "./components/ReservationSection";
+import AppointmentSection from "./components/AppointmentSection";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -40,7 +40,7 @@ function App() {
             }
           />
           <Route
-            path="/homepage/details/:propertyId"
+            path="/property/details/:propertyId"
             element={
               <ProtectedRoute>
                 <ViewMoreSection />
@@ -80,10 +80,10 @@ function App() {
             }
           />
           <Route
-            path="/property/reservation/:propertyId"
+            path="/property/appointment/:propertyId"
             element={
               <ProtectedRoute>
-                <ReservationSection />
+                <AppointmentSection />
               </ProtectedRoute>
             }
           />
