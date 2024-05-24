@@ -5,6 +5,7 @@ import FavoriteSection from "./FavoriteSection";
 import ChatSection from "./ChatSection";
 import PersonalPropertySection from "./PersonalPropertySection";
 import { useMediaQuery } from "react-responsive";
+import ListAppointment from "./ListAppointment";
 
 const ProfileDxTopSection = () => {
   const [activeSection, setActiveSection] = useState("favorites");
@@ -40,6 +41,16 @@ const ProfileDxTopSection = () => {
             Your real state
           </div>
         </div>
+        <div className="border-end ">
+          <div
+            className={`mx-3 btnProfile text-center  ${
+              activeSection === "appointments" ? "bg-primary text-light" : ""
+            }`}
+            onClick={() => handleToggle("appointments")}
+          >
+            Your appointments
+          </div>
+        </div>
         <div>
           <div
             className={`mx-3 btnProfile text-center ${
@@ -56,6 +67,7 @@ const ProfileDxTopSection = () => {
         {activeSection === "favorites" && <FavoriteSection />}
         {activeSection === "property" && <PersonalPropertySection />}
         {activeSection === "chat" && <ChatSection />}
+        {activeSection === "appointments" && <ListAppointment />}
       </Col>
     </Row>
   );

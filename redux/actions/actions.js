@@ -10,6 +10,7 @@ export const FAVORITES_LIST = "ADD_TO_FAVORITE";
 export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
 export const GET_SINGLE_PROPERTY = "GET_SINGLE_PROPERTY";
 export const SELL_PROPERTY = "SELL_PROPERTY";
+export const RESERVATIONS_LIST = "RESERVATIONS_LIST";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -455,6 +456,35 @@ export const postReservation = (token, payload) => {
         alert("Reservation send correctly");
       } else {
         alert("Error while sendin the reservetion, try again later.");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getReservationsList = (token, userId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(
+        baseEndPoint + "/reservations/user/" + userId,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: RESERVATIONS_LIST, payload: data });
+      } else {
+        alert("Error while fetching profile");
       }
     } catch (error) {
       console.log(error);

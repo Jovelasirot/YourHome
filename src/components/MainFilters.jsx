@@ -136,7 +136,7 @@ const MainFilters = () => {
           </Form.Select>
         </Col>
         <Col xs={12} md={3} xl={1}>
-          <p className="mb-0">Bedrooms:</p>
+          <p className="mb-0">Min bedrooms:</p>
           <input
             className="form-control bg-primary  text-light"
             value={filters.minBedrooms}
@@ -144,7 +144,7 @@ const MainFilters = () => {
           />
         </Col>
         <Col xs={12} md={3} xl={1} className="">
-          <p className="mb-0">Bathrooms:</p>
+          <p className="mb-0">Min bathrooms:</p>
           <input
             className="form-control bg-primary  text-light"
             value={filters.minBathrooms}

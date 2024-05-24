@@ -106,19 +106,27 @@ const SinglePost = () => {
                       </Card.Title>
                     </Col>
                   </Row>
-                  <div className="d-flex justify-content-end  ">
-                    {favoriteList && favoriteList.includes(property.id) ? (
-                      <i
-                        className="bi bi-heart-fill fs-4 heartIcon text-danger"
-                        onClick={() => handleAddToFavorites(token, property.id)}
-                      />
-                    ) : (
-                      <i
-                        className="bi bi-heart fs-4 heartIcon"
-                        onClick={() => handleAddToFavorites(token, property.id)}
-                      />
-                    )}
-                  </div>
+                  {property.user.id !== profile.id ? (
+                    <div className="d-flex justify-content-end  ">
+                      {favoriteList && favoriteList.includes(property.id) ? (
+                        <i
+                          className="bi bi-heart-fill fs-4 heartIcon text-danger"
+                          onClick={() =>
+                            handleAddToFavorites(token, property.id)
+                          }
+                        />
+                      ) : (
+                        <i
+                          className="bi bi-heart fs-4 heartIcon"
+                          onClick={() =>
+                            handleAddToFavorites(token, property.id)
+                          }
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   <Card.Text className="mt-2 px-2 singleDescription">
                     {property.description}

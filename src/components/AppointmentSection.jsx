@@ -54,7 +54,7 @@ const AppointmentSection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postReservation(token, formData));
-    navigate(`property/details/${propertyId}`);
+    navigate(`/property/details/${propertyId}`);
   };
 
   const isFormComplete = () => {

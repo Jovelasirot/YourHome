@@ -79,7 +79,7 @@ const PersonalPropertySection = () => {
                   </Row>
                 </Col>
                 <Col className="d-flex flex-column justify-content-end text-end">
-                  <Link to={`/homepage/details/${property.id}`}>
+                  <Link to={`/property/details/${property.id}`}>
                     <Button variant="secondary">View more</Button>
                   </Link>
                 </Col>
