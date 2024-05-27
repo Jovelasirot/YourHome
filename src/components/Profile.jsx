@@ -103,8 +103,8 @@ const Profile = () => {
   };
 
   return (
-    <Container fluid className={isXxlScreen ? "vh-100" : ""}>
-      <Row>
+    <Container fluid>
+      <Row className={isXxlScreen ? "vh-100" : ""}>
         <Col xs={12} xxl={3} className={isXxlScreen ? "p-5" : "mt-3"}>
           <Row className="flex-column">
             <Col>
@@ -234,6 +234,7 @@ const Profile = () => {
           <Modal
             show={showModalContactInfo}
             onHide={() => handleModalContact()}
+            centered
           >
             <Modal.Header closeButton className="bg-secondary ">
               <Modal.Title>Update Contact info</Modal.Title>

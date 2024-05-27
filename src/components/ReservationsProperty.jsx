@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Col, Row, Placeholder, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { postReservationPropertyAnswer } from "../../redux/actions/actions";
+import { updateReservation } from "../../redux/actions/actions";
 import { useParams } from "react-router-dom";
 
 const ReservationsProperty = () => {
   const [showPendingOnly, setShowPendingOnly] = useState(false);
   const loading = useSelector((state) => state.reservationListProperty.loading);
   const token = localStorage.getItem("token");
-  const { propertyId } = useParams();
   const dispatch = useDispatch();
   const reservationListProperty = useSelector(
     (state) => state.reservationListProperty.content?.content
@@ -17,31 +16,31 @@ const ReservationsProperty = () => {
     reservationStatus: "",
   });
 
-  const handleReservationAccept = () => {
+  const handleReservationAccept = (reservationId) => {
     const updatedFormData = {
       ...formData,
       reservationStatus: "ACCEPTED",
     };
 
-    dispatch(postReservationPropertyAnswer(token, propertyId, updatedFormData));
+    dispatch(updateReservation(token, reservationId, updatedFormData));
   };
 
-  const handleReservationReject = () => {
+  const handleReservationReject = (reservationId) => {
     const updatedFormData = {
       ...formData,
       reservationStatus: "NOT_ACCEPTED",
     };
 
-    dispatch(postReservationPropertyAnswer(token, propertyId, updatedFormData));
+    dispatch(updateReservation(token, reservationId, updatedFormData));
   };
 
-  const handleReservationCancel = () => {
+  const handleReservationCancel = (reservationId) => {
     const updatedFormData = {
       ...formData,
       reservationStatus: "CANCELED",
     };
 
-    dispatch(postReservationPropertyAnswer(token, propertyId, updatedFormData));
+    dispatch(updateReservation(token, reservationId, updatedFormData));
   };
 
   const filteredReservations = showPendingOnly
@@ -124,20 +123,20 @@ const ReservationsProperty = () => {
                   {reservation.reservationStatus !== "ACCEPTED" && (
                     <i
                       className="bi bi-check-circle text-success iconBtn fs-5 "
-                      onClick={() => handleReservationAccept()}
+                      onClick={() => handleReservationAccept(reservation.id)}
                     ></i>
                   )}
                   {reservation.reservationStatus !== "ACCEPTED" && (
                     <i
                       className="bi bi-x-circle iconBtn text-danger fs-5 "
-                      onClick={() => handleReservationReject()}
+                      onClick={() => handleReservationReject(reservation.id)}
                     ></i>
                   )}
                   {reservation.reservationStatus === "ACCEPTED" && (
                     <Button
                       variant="outline-danger"
                       className="rounded-5"
-                      onClick={() => handleReservationCancel()}
+                      onClick={() => handleReservationCancel(reservation.id)}
                     >
                       Cancel
                     </Button>

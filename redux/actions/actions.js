@@ -484,7 +484,7 @@ export const getReservationsList = (token, userId) => {
         const data = await response.json();
         dispatch({ type: RESERVATIONS_LIST, payload: data });
       } else {
-        alert("Error while fetching reservations list");
+        alert("Error while fetching appointements list");
       }
     } catch (error) {
       console.log(error);
@@ -513,7 +513,7 @@ export const getReservationsListProperty = (token, propertyId) => {
         const data = await response.json();
         dispatch({ type: RESERVATIONS_LIST_PROPERTY, payload: data });
       } else {
-        alert("Error while fetching reservertions of the property");
+        alert("Error while fetching appointements of the property");
       }
     } catch (error) {
       console.log(error);
@@ -523,12 +523,12 @@ export const getReservationsListProperty = (token, propertyId) => {
   };
 };
 
-export const postReservationPropertyAnswer = (token, propertyId, payload) => {
+export const updateReservation = (token, reservationId, payload) => {
   return async (dispatch) => {
     try {
       dispatch({ type: TURN_ON_SPINNER });
       const response = await fetch(
-        baseEndPoint + "/reservations/update/" + propertyId,
+        baseEndPoint + "/reservations/update/" + reservationId,
         {
           method: "PUT",
           headers: {
@@ -540,12 +540,39 @@ export const postReservationPropertyAnswer = (token, propertyId, payload) => {
       );
       if (response.ok) {
         window.location.reload();
-        alert("Reservation updated correctly");
+        alert("Appointement updated correctly");
       } else {
         alert("Error while updating the reservetion, try again later.");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const deleteCurrentAppointement = (token, reservationId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(
+        baseEndPoint + "/reservations/delete/" + reservationId,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        window.location.reload();
+        alert("Appointement deleted");
+      } else {
+        alert("Error while deleting the appointement");
+      }
+    } catch (error) {
+      alert("Error while deleting the appointement");
     } finally {
       dispatch({ type: TURN_OFF_SPINNER });
     }
