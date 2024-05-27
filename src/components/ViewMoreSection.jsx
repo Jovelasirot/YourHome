@@ -10,11 +10,16 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getProfile, getSingleProperty } from "../../redux/actions/actions";
+import {
+  getProfile,
+  getReservationsListProperty,
+  getSingleProperty,
+} from "../../redux/actions/actions";
 import blueprint from "../assets/Img/blueprint.png";
 import bedroom from "../assets/Img/bedroom.png";
 import bathroom from "../assets/Img/bathroom.png";
 import { useMediaQuery } from "react-responsive";
+import ReservationsProperty from "./ReservationsProperty";
 
 const ViewMoreSection = () => {
   const { propertyId } = useParams();
@@ -26,9 +31,9 @@ const ViewMoreSection = () => {
   useEffect(() => {
     dispatch(getSingleProperty(token, propertyId));
     dispatch(getProfile(token));
-
+    dispatch(getReservationsListProperty(token, propertyId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch.propertyId]);
 
   const property = useSelector((state) => state.singleProperty.content);
 
@@ -38,12 +43,16 @@ const ViewMoreSection = () => {
     setShowModal(!showModal);
   };
 
+  const reservationListProperty = useSelector(
+    (state) => state.reservationListProperty.content.content
+  );
+
   if (!property || Object.keys(property).length === 0) {
     return <p>Loading...</p>;
   }
 
   return (
-    <Container className={isMdScreen ? "vh-100" : ""}>
+    <Container>
       <Row className="align-items-center">
         <Col className="mt-4 shadow rounded-2">
           <Link to="/homepage" className="text-decoration-none ">
@@ -213,6 +222,11 @@ const ViewMoreSection = () => {
           </Modal.Body>
         </Modal>
       </Row>
+      {!reservationListProperty ||
+        (currentUser.id == property.user.id &&
+          Object.keys(reservationListProperty).length !== 0 && (
+            <ReservationsProperty />
+          ))}
     </Container>
   );
 };

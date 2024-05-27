@@ -15,7 +15,7 @@ const ProfileDxTopSection = () => {
   const isXxlScreen = useMediaQuery({ minWidth: 1400 });
 
   return (
-    <Row className="flex-column mt-5 ">
+    <Row className="flex-column mt-5">
       <Col
         className={`d-flex ${
           isXxlScreen ? "" : "justify-content-center align-items-center"

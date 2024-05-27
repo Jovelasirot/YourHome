@@ -18,7 +18,11 @@ const ListAppointment = () => {
   );
 
   if (!Array.isArray(reservationList) || reservationList.length === 0) {
-    return <div className="vh-100">Your appointments will be shown here</div>;
+    return (
+      <div className="vh-100 text-center">
+        Your appointments will be shown here
+      </div>
+    );
   }
 
   return (
@@ -79,6 +83,10 @@ const ListAppointment = () => {
                     height="50"
                     className="rounded-circle"
                   />
+                  <small className="ms-2">
+                    {reservation.property.user.name} {""}
+                    {reservation.property.user.surname}
+                  </small>
                 </Col>
                 <Col className="d-flex align-items-center" xs={1}>
                   <i className="bi bi-pencil-square text-end iconBtn fs-5 "></i>

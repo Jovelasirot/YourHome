@@ -144,7 +144,7 @@
   transition: background-color 0.3s ease, border 0.5s ease, box-shadow 0.3s ease;
 }
 .iconBtn:hover {
-  background-color: #eae9f1;
+  background-color: #f5f4fc;
   border: 1px solid #ECECEC;
   box-shadow: 1px 8px 15px -4px #b3b1b1;
 }

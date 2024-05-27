@@ -11,6 +11,7 @@ export const GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES";
 export const GET_SINGLE_PROPERTY = "GET_SINGLE_PROPERTY";
 export const SELL_PROPERTY = "SELL_PROPERTY";
 export const RESERVATIONS_LIST = "RESERVATIONS_LIST";
+export const RESERVATIONS_LIST_PROPERTY = "RESERVATIONS_LIST_PROPERTY";
 
 const baseEndPoint = "http://localhost:3001";
 
@@ -452,8 +453,7 @@ export const postReservation = (token, payload) => {
         body: JSON.stringify(payload),
       });
       if (response.ok) {
-        const data = await response.json();
-        alert("Reservation send correctly");
+        alert("Reservation sent correctly");
       } else {
         alert("Error while sendin the reservetion, try again later.");
       }
@@ -484,7 +484,65 @@ export const getReservationsList = (token, userId) => {
         const data = await response.json();
         dispatch({ type: RESERVATIONS_LIST, payload: data });
       } else {
-        alert("Error while fetching profile");
+        alert("Error while fetching reservations list");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const getReservationsListProperty = (token, propertyId) => {
+  return async (dispatch) => {
+    dispatch({ type: TURN_ON_SPINNER });
+    try {
+      const response = await fetch(
+        baseEndPoint + "/reservations/property/" + propertyId,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: RESERVATIONS_LIST_PROPERTY, payload: data });
+      } else {
+        alert("Error while fetching reservertions of the property");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: TURN_OFF_SPINNER });
+    }
+  };
+};
+
+export const postReservationPropertyAnswer = (token, propertyId, payload) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: TURN_ON_SPINNER });
+      const response = await fetch(
+        baseEndPoint + "/reservations/update/" + propertyId,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      if (response.ok) {
+        window.location.reload();
+        alert("Reservation updated correctly");
+      } else {
+        alert("Error while updating the reservetion, try again later.");
       }
     } catch (error) {
       console.log(error);
