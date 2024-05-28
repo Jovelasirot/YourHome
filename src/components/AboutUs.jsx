@@ -44,52 +44,32 @@ const AboutUs = () => {
           </p>
         </div>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
+          Your Home is a cutting-edge web platform for property search and
+          sales, designed to offer an intuitive user experience and advanced
+          features. We utilize modern technologies to ensure efficiency,
+          security, and scalability.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
+          You can schedule appointments to visit properties directly through the
+          platform. An integrated calendar system allows you to choose dates and
+          times that are convenient for both parties.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
+          Each listing includes an option to contact the owner via email. Users
+          can send emails directly from the site, without the need to copy
+          addresses or use external email programs.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
+          Secure Authentication: All communications are protected by an
+          authentication system that ensures the security of personal data.
+          Personal Data Management: Contact details and personal information are
+          managed securely to prevent unauthorized access.
         </p>
+        <p className="text-center fs-1 fw-bold">Coming soon</p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, rem,
-          mollitia nesciunt molestiae voluptas eius quas architecto quis
-          sapiente deserunt qui voluptate nobis dolore placeat obcaecati soluta
-          ex. Dolorem, magnam!
+          Users will be able to send direct messages to property owners through
+          the platform. This feature will allow them to ask questions and
+          receive quick responses without leaving the site.
         </p>
       </Col>
     </Container>
